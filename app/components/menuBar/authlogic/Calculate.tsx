@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 
@@ -45,7 +46,7 @@ export default function Calculate() {
         <>
         
           {adminData?.adminRole === 'cockney' ? (
-          <a className="nav-link text-white px-0" href="contact.html">Dashboard</a>
+          <Link className="nav-link text-white px-0" href="/components/private/dashboard">Dashboard</Link>
           ) : (
            <p> </p>
           )}

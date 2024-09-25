@@ -22,7 +22,7 @@ export default function Logout() {
   return (
     <div>
 
-<p className="nav-link text-white px-0" onClick={handleLogout}>
+<p className="nav-link text-white px-0" onClick={handleLogout} style={{cursor: "pointer"}}>
       Logout
     </p>
 

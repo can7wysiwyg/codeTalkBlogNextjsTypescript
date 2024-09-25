@@ -2,7 +2,7 @@
 import { getSession } from '@/db/getSession'
 import Calculate from './authlogic/Calculate';
 import Logout from './authlogic/Logout';
-
+import Link from 'next/link';
 
 
 export default  async  function NavMenu() {
@@ -18,47 +18,29 @@ export default  async  function NavMenu() {
   <>
   <aside>
   <div className="sidenav position-sticky d-flex flex-column justify-content-between">
-    <a className="navbar-brand logo" href="index.html">
+    <Link className="navbar-brand logo" href="/">
       {/* <img src={Logo} alt="" /> */}
       hi
-    </a>
+    </Link>
     {/* end of navbar-brand */}
 
     <div className="navbar navbar-dark my-4 p-0 font-primary">
       <ul className="navbar-nav w-100">
         <li className="nav-item active">
-          <a className="nav-link text-white px-0 pt-0" href="index.html">Home</a>
+          <Link className="nav-link text-white px-0 pt-0" href="/">Home</Link>
         </li>
         <li className="nav-item">
           <Calculate />
 
         </li>
         <li className="nav-item">
-          <a className="nav-link text-white px-0" href="about.html">About</a>
+          <Link className="nav-link text-white px-0" href="/components/about">About</Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link text-white px-0" href="contact.html">Contact</a>
+          <Link className="nav-link text-white px-0" href="/components/contact">Contact</Link>
         </li>
 
-        <li className="nav-item accordion">
-          <div id="drop-menu" className="drop-menu collapse">
-            <a className="d-block" href="index-2.html">Home 2</a>
-            <a className="d-block" href="category.html">Category</a>
-            <a className="d-block" href="post-details.html">Post Details</a>
-            <a className="d-block" href="privacy.html">Privacy &amp; Policy</a>
-          </div>
-          <a
-            className="nav-link text-white"
-            href="#!"
-            role="button"
-            data-toggle="collapse"
-            data-target="#drop-menu"
-            aria-expanded="false"
-            aria-controls="drop-menu"
-          >
-            Pages
-          </a>
-        </li>
+        
         <li className="nav-item mt-3">
         <select
   className="custom-select bg-transparent rounded-0 text-white shadow-none"
@@ -87,25 +69,25 @@ export default  async  function NavMenu() {
 
     <ul className="list-inline nml-2">
       <li className="list-inline-item">
-        <a href="#!" className="text-white text-red-onHover pr-2">
+        <Link href="#!" className="text-white text-red-onHover pr-2">
           <span className="fab fa-twitter"></span>
-        </a>
+        </Link>
       </li>
       <li className="list-inline-item">
-        <a href="#!" className="text-white text-red-onHover p-2">
+        <Link href="#!" className="text-white text-red-onHover p-2">
           <span className="fab fa-facebook-f"></span>
-        </a>
+        </Link>
       </li>
       <li className="list-inline-item">
-        <a href="#!" className="text-white text-red-onHover p-2">
+        <Link href="#!" className="text-white text-red-onHover p-2">
           <span className="fab fa-instagram"></span>
-        </a>
+        </Link>
       </li>
       <li className="list-inline-item">
-        <a href="#!" className="text-white text-red-onHover p-2">
+        <Link href="#!" className="text-white text-red-onHover p-2">
           <span className="fab fa-linkedin-in"></span>
           {/* <FontAwesomeIcon icon={faLinkedin} /> */}
-        </a>
+        </Link>
       </li>
     </ul>
     {/* end of social-links */}

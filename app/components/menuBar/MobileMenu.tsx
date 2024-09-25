@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 export default function MobileMenu() {
@@ -8,10 +9,10 @@ export default function MobileMenu() {
     <div className="container">
       <div className="row align-items-center">
         <div className="col-6">
-          <a href="index.html">
+          <Link href="/">
             hoi
             {/* <img src={Logo} alt="" /> */}
-          </a>
+          </Link>
         </div>
         <div className="col-6 text-right">
           <button className="nav-toggle bg-transparent border text-white">
