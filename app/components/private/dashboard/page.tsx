@@ -23,7 +23,7 @@ export default async function dashboardmenu() {
                 <ul className="list-unstyled">
                   <li>
                     <Link
-                      href="/components/private/dashboard/catCreate"
+                      href="/components/private/catCreate"
                       style={{ color: "white" }}
                     >
                       <i className="fas fa-folder"></i> Create Categories
@@ -31,7 +31,7 @@ export default async function dashboardmenu() {
                   </li>
                   <li>
                     <Link
-                      href="/components/private/dashboard/categories"
+                      href="/components/private/categories"
                       style={{ color: "white" }}
                     >
                       <i className="fas fa-list"></i>
@@ -41,7 +41,7 @@ export default async function dashboardmenu() {
 
                   <li>
                     <Link
-                      href="/components/private/dashboard/artCreate"
+                      href="/components/private/cartCreate"
                       style={{ color: "white" }}
                     >
                       <i className="fas fa-pen"></i>
@@ -50,7 +50,7 @@ export default async function dashboardmenu() {
                   </li>
                   <li>
                     <Link
-                      href="/components/private/dashboard/articles"
+                      href="/components/private/articles"
                       style={{ color: "white" }}
                     >
                       <i className="fas fa-eye"></i>
