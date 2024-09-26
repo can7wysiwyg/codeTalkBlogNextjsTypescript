@@ -11,7 +11,7 @@ export default function CategoryCreate() {
 
         try {
          
-            const response = await fetch('/api/categories', {
+            const response = await fetch('/api/categories/private', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
