@@ -51,6 +51,27 @@ export default function () {
 
         e.preventDefault()
 
+        const response = await fetch(`/api/categories/private/${category}`, {
+          method: "PATCH",
+          headers: {
+            'Content-Type': 'application/json'
+        },
+          body: JSON.stringify({catName})
+
+        })
+
+        if(!response.ok) {
+          throw new Error(`Response status: ${response.status}`);
+
+
+        }
+
+        const data = await response.json()
+
+        alert(data.msg)
+
+        window.location.href = `/components/private/categories/${category}`
+
        }
 
 
@@ -58,7 +79,7 @@ export default function () {
   return (
     <>
 
-<div className="container py-4 my-5">
+<div className="container py-8 my-9">
      <div className="row">
                 <div className="col-12">
                     <div className="bg-dark p-5 mb-5">
@@ -73,15 +94,10 @@ export default function () {
                                 </div>
                                 </div>
                                 </div>
-                                </div>
-                                </div>
 
+                                {/* form comp */}
 
-
-                                <div className="container py-4 my-5">
-  
-  <div className="row">
-    <div className="col-md-10">
+                                <div className="col-md-10">
       <div className="contact-form bg-dark">
       <h4 className="text-white add-letter-space mb-5">Update Category</h4>
 
@@ -125,13 +141,16 @@ export default function () {
 
         </div>
         </div>
-        </div>
-        </div>
-      
+        
 
 
 
+                                </div>
+                                </div>
 
+
+
+                               
 
     
     

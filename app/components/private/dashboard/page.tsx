@@ -41,7 +41,7 @@ export default async function dashboardmenu() {
 
                   <li>
                     <Link
-                      href="/components/private/cartCreate"
+                      href="/components/private/artCreate"
                       style={{ color: "white" }}
                     >
                       <i className="fas fa-pen"></i>
