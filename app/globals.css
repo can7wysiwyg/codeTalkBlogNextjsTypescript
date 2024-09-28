@@ -44,20 +44,24 @@
  :focus {
    outline: 0;
  }
- 
+
  .main-content {
-   width: calc(100% - 340px);
- }
- @media (max-width: 991px) {
-   .main-content {
-     width: calc(100% - 250px);
-   }
- }
- @media (max-width: 767px) {
-   .main-content {
-     width: 100%;
-   }
- }
+  width: calc(100% - 300px ); 
+}
+
+@media (max-width: 991px) {
+  .main-content {
+      width: calc(100% - 200px); 
+  }
+}
+
+@media (max-width: 767px) {
+  .main-content {
+      width: 100%; 
+  }
+}
+
+ 
  
  .btn {
    font-size: 15px;
@@ -738,4 +742,7 @@
    margin-bottom: 0;
  }
  /*# sourceMappingURL=style.css.map */
+ 
+
+
  
