@@ -4,6 +4,8 @@ import { getSession } from "@/db/getSession";
 import { Article } from "@/db/models/Article";
 import { NextResponse } from "next/server";
 import { Readable } from 'stream';
+import { Admin } from '@/db/models/Admin';
+
 
 // Cloudinary configuration
 cloudinary.config({
@@ -71,11 +73,38 @@ export const POST = async (request: Request) => {
         // Connect to MongoDB
         await connect();
 
+        const adminExists = await Admin.findOne({email: sessEmail})
+
+
+
+
+if(adminExists.adminRole !== "cockney")  {
+    
+    return NextResponse.json({msg: "authorization error"})
+    
+}
+
+
         // Get other form data
         const articleTitle = formData.get('title') as string;
         const articleCategory = formData.get('category') as string;
         const articleText = formData.get('text') as string;
 
+
+        if(!articleTitle) {
+            return  NextResponse.json({msg: "there was a problem uploading the title"})
+        }
+
+
+        if(!articleCategory) {
+            return  NextResponse.json({msg: "there was a problem uploading the article category"})
+        }
+
+        if(!articleText) {
+            return  NextResponse.json({msg: "there was a problem uploading the article text"})
+        }
+          
+        
         // Create a new article document in MongoDB with the image URL from Cloudinary
         const newArticle = await Article.create({
             articleTitle,
@@ -83,6 +112,8 @@ export const POST = async (request: Request) => {
             articleCategory,
             articleText
         });
+
+        
 
         return NextResponse.json({ msg: "Article created successfully", article: newArticle });
     } catch (error: any) {

@@ -11,8 +11,8 @@ const ArticleSchema = new mongoose.Schema({
         required: true
     },
     articleCategory : {
-        type: String,
-    
+        type: mongoose.Types.ObjectId,
+        ref: 'Category',
         required: true
     },
 
