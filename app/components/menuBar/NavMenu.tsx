@@ -18,8 +18,8 @@ export default  async  function NavMenu() {
     <header className="navigation">
   <div className="container">
     <nav className="navbar navbar-expand-lg navbar-light px-0">
-      <Link className="navbar-brand order-1 py-0" href="index.html">
-        <img decoding="async" className="img-fluid" src="images/logo.png" alt="CodeTalk" />
+      <Link className="navbar-brand order-1 py-0" href="/">
+        <img decoding="async" className="img-fluid" src="i.jpg" alt="CodeTalk" />
       </Link>
       <div className="navbar-actions order-3 ml-0 ml-md-4">
         <button

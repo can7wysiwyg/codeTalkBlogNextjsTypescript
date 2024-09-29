@@ -12,9 +12,17 @@ interface Article {
   createdAt: Date
 }
 
+interface Category {
+  catName: string,
+  _id: string
+}
+
+
 
 export default function Home() {
   const[articleItems, setArticleItems] = useState<Article[] | null>(null)
+  const [catItems, setCatItems] = useState<Category[] | null>(null);
+
 
 
   useEffect(() => {
@@ -40,6 +48,35 @@ export default function Home() {
 
   }, [])
 
+
+  useEffect(() => {
+
+    const fetchCategories = async() => {
+
+       try {
+
+        const response = await fetch('/api/categories/public')
+
+        const data = await response.json()
+        
+        setCatItems(data)
+        
+       } catch (error: any) {
+
+        console.log(`there was a problem ${error}`)
+        
+       }
+
+    }
+
+
+    fetchCategories()
+
+
+
+}, [])
+
+
   return (
     <main>
       <div className="container">
@@ -54,12 +91,9 @@ export default function Home() {
 
                   <div className="col-12 mb-4">
                 <article className="card article-card">
-                  <a href="article.html">
+                  <Link href={`${articleItem._id}`}>
                     <div className="card-image">
-                      <div className="post-info">
-                        <span className="text-uppercase">04 Jun 2021</span>
-                        <span className="text-uppercase">3 minutes read</span>
-                      </div>
+                      
                       <img
                         loading="lazy"
                         decoding="async"
@@ -68,25 +102,25 @@ export default function Home() {
                         className="w-100"
                       />
                     </div>
-                  </a>
+                  </Link>
                   <div className="card-body px-0 pb-1">
                     <ul className="post-meta mb-2">
                       <li>
-                        <a href="#!">travel</a>
-                        <a href="#!">news</a>
+                        <span>CodeTalk</span>
+                        <Link href="#!">news</Link>
                       </li>
                     </ul>
                     <h2 className="h1">
-                      <a className="post-title" href="article.html">
+                      <Link className="post-title" href={`${articleItem._id}`}>
                         {articleItem.articleTitle}
-                      </a>
+                      </Link>
                     </h2>
                     <p className="card-text" >
                     
                       <ShowPartialArticle articleItem={articleItem} />
                     </p>
                     <div className="content">
-                      <Link className="read-more-btn" href="article.html">
+                      <Link className="read-more-btn" href={`${articleItem._id}`}>
                         Read Full Article
                       </Link>
                     </div>
@@ -184,17 +218,20 @@ export default function Home() {
                     <h2 className="section-title mb-3">Categories</h2>
                     <div className="widget-body">
                       <ul className="widget-list">
-                        <li>
-                          <a href="#!">
-                            computer <span className="ml-auto">(3)</span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#!">
-                            cruises <span className="ml-auto">(2)</span>
-                          </a>
-                        </li>
-                        {/* More categories... */}
+
+                      {
+                Array.isArray(catItems) ? catItems?.map((catItem) => (
+
+                  <li>
+                <Link key={catItem._id} href="/">
+                  {catItem.catName}
+                </Link>
+              </li>
+
+
+                )) : "LOADING..."
+              }
+                        
                       </ul>
                     </div>
                   </div>
@@ -272,7 +309,7 @@ const ShowPartialArticle = ({ articleItem }: { articleItem: Article }) => {
           {isExpanded ? (
             ""
           ) : (
-            <Link href={`/post_single/${articleItem._id}`}>see more</Link>
+            <Link href={`${articleItem._id}`}>see more</Link>
           )}
         </span>
       )}
