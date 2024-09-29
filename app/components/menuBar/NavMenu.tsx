@@ -3,6 +3,7 @@ import { getSession } from '@/db/getSession'
 import Calculate from './authlogic/Calculate';
 import Logout from './authlogic/Logout';
 import Link from 'next/link';
+import DropMenu from './DropMenu';
 
 
 export default  async  function NavMenu() {
@@ -14,91 +15,70 @@ export default  async  function NavMenu() {
 
   return (
     
-    
-  <>
-  <aside>
-  <div className="sidenav position-sticky d-flex flex-column justify-content-between">
-    <Link className="navbar-brand logo" href="/">
-      {/* <img src={Logo} alt="" /> */}
-      hi
-    </Link>
-    {/* end of navbar-brand */}
+    <header className="navigation">
+  <div className="container">
+    <nav className="navbar navbar-expand-lg navbar-light px-0">
+      <Link className="navbar-brand order-1 py-0" href="index.html">
+        <img decoding="async" className="img-fluid" src="images/logo.png" alt="CodeTalk" />
+      </Link>
+      <div className="navbar-actions order-3 ml-0 ml-md-4">
+        <button
+          aria-label="navbar toggler"
+          className="navbar-toggler border-0"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+      </div>
+      <form action="#!" className="search order-lg-3 order-md-2 order-3 ml-auto">
+        <input id="search-query" name="s" type="search" placeholder="Search..." autoComplete="off" />
+      </form>
+      <div className="collapse navbar-collapse text-center order-lg-2 order-4" id="navigation">
+        <ul className="navbar-nav mx-auto mt-3 mt-lg-0">
+          <li className="nav-item">
 
-    <div className="navbar navbar-dark my-4 p-0 font-primary">
-      <ul className="navbar-nav w-100">
-        <li className="nav-item active">
-          <Link className="nav-link text-white px-0 pt-0" href="/">Home</Link>
-        </li>
-        <li className="nav-item">
-          <Calculate />
+            <Calculate />
 
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link text-white px-0" href="/components/about">About</Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link text-white px-0" href="/components/contact">Contact</Link>
-        </li>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" href="about.html">About Me</Link>
+          </li>
+          <li className="nav-item dropdown">
+            <Link
+              className="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Articles
+            </Link>
+            <ul className="dropdown-menu">
+              <li><p className="dropdown-item" >Select</p></li>
+              <DropMenu />
+                          </ul>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" href="contact.html">Contact</Link>
+          </li>
 
-        
-        <li className="nav-item mt-3">
-        <select
-  className="custom-select bg-transparent rounded-0 text-white shadow-none"
-  id="pick-lang"
-  defaultValue="en"
->
-  <option value="en">English</option>
-  <option value="fr">French</option>
-</select>
+          <li className="nav-item">
 
-          
-        </li>
+{
+  session ? <Logout /> : ""
+}
 
-        <li className="nav-item">
+</li>
 
-          {
-            session ? <Logout /> : ""
-          }
-
-        </li>
-
-
-      </ul>
-    </div>
-    {/* end of navbar */}
-
-    <ul className="list-inline nml-2">
-      <li className="list-inline-item">
-        <Link href="#!" className="text-white text-red-onHover pr-2">
-          <span className="fab fa-twitter"></span>
-        </Link>
-      </li>
-      <li className="list-inline-item">
-        <Link href="#!" className="text-white text-red-onHover p-2">
-          <span className="fab fa-facebook-f"></span>
-        </Link>
-      </li>
-      <li className="list-inline-item">
-        <Link href="#!" className="text-white text-red-onHover p-2">
-          <span className="fab fa-instagram"></span>
-        </Link>
-      </li>
-      <li className="list-inline-item">
-        <Link href="#!" className="text-white text-red-onHover p-2">
-          <span className="fab fa-linkedin-in"></span>
-          {/* <FontAwesomeIcon icon={faLinkedin} /> */}
-        </Link>
-      </li>
-    </ul>
-    {/* end of social-links */}
+        </ul>
+      </div>
+    </nav>
   </div>
-</aside>
+</header>
 
-
-  
-  
-  </>
-
+    
 
 
 
