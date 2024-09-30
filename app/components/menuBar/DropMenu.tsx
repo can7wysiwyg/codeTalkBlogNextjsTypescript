@@ -50,7 +50,7 @@ export default function DropMenu() {
 {
 
   Array.isArray(items) ? items?.map((item) => (
-    <Link href={`/categories/articles/${item._id}`} className="dropdown-item">{item.catName}</Link>
+    <Link key={item._id} href={`/categories/articles/${item._id}`} className="dropdown-item">{item.catName}</Link>
 
   )) : "LOADING..."
 

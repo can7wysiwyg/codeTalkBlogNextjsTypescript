@@ -11,11 +11,12 @@ export default async function dashboardmenu() {
 
   return (
     <>
-      <div className="container py-4 my-5">
+    <section className="section">
+      <div className="container">
         <div className="row">
-          <div className="col-md-10">
-            <div className="contact-form bg-dark">
-              <h3 className="text-white add-letter-space mb-5">
+          <div className="col-md-12">
+            <div>
+              <h3 className=" text-center add-letter-space mb-5">
                 choose what to do
               </h3>
 
@@ -24,7 +25,7 @@ export default async function dashboardmenu() {
                   <li>
                     <Link
                       href="/components/private/catCreate"
-                      style={{ color: "white" }}
+                      
                     >
                       <i className="fas fa-folder"></i> Create Categories
                     </Link>
@@ -32,7 +33,7 @@ export default async function dashboardmenu() {
                   <li>
                     <Link
                       href="/components/private/categories"
-                      style={{ color: "white" }}
+                      
                     >
                       <i className="fas fa-list"></i>
                       View Categories
@@ -42,7 +43,7 @@ export default async function dashboardmenu() {
                   <li>
                     <Link
                       href="/components/private/artCreate"
-                      style={{ color: "white" }}
+                      
                     >
                       <i className="fas fa-pen"></i>
                       Write New Article
@@ -51,7 +52,7 @@ export default async function dashboardmenu() {
                   <li>
                     <Link
                       href="/components/private/articles"
-                      style={{ color: "white" }}
+                      
                     >
                       <i className="fas fa-eye"></i>
                       View Articles
@@ -63,6 +64,7 @@ export default async function dashboardmenu() {
           </div>
         </div>
       </div>
+      </section>
     </>
   );
 }

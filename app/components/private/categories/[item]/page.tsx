@@ -79,13 +79,13 @@ export default function () {
   return (
     <>
 
-<div className="container py-8 my-9">
+<div className="container ">
      <div className="row">
                 <div className="col-12">
-                    <div className="bg-dark p-5 mb-5">
+                    <div className=" p-5 mb-5">
                         <div className="row no-gutters">
                             <div className="col-xl-6 border-right border-lg-0 pr-0 pr-xl-5">
-                            <h1 className="text-white add-letter-space">{item?.catName}</h1>
+                            <h1 className=" add-letter-space">{item?.catName}</h1>
 
                             
                             </div>
@@ -98,8 +98,8 @@ export default function () {
                                 {/* form comp */}
 
                                 <div className="col-md-10">
-      <div className="contact-form bg-dark">
-      <h4 className="text-white add-letter-space mb-5">Update Category</h4>
+      <div >
+      <h4 className="add-letter-space mb-5">Update Category</h4>
 
       <form onSubmit={handleSubmit}  className="needs-validation" noValidate>
           <div className="row">

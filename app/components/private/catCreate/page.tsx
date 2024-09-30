@@ -19,6 +19,10 @@ export default function CategoryCreate() {
                 body: JSON.stringify({catName})
             })
 
+            if(!response.ok) {
+              alert("there was a problem in creating the category")
+            }
+
             const data = await response.json()
             alert(data.msg)
 
@@ -36,56 +40,41 @@ export default function CategoryCreate() {
 
   return (
     <>
-    <div className="container py-4 my-5">
-  
-  <div className="row">
-    <div className="col-md-10">
-      <div className="contact-form bg-dark">
-      <h4 className="text-white add-letter-space mb-5">Create New Category</h4>
+    <section className="section">
+  <div className="container">
+    <div className="row justify-content-center">
+      <div className="col-lg-6 mt-4 mt-lg-0">
+        <h4 className=" add-letter-space mb-5 text-center">
+          Create New Category
+        </h4>
 
-      <form onSubmit={handleSubmit}  className="needs-validation" noValidate>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="form-group mb-5">
-                <label htmlFor="category" className="text-black-300">
-                  Category
-                </label>
-                <input
-                  type="text"
-                  id="catName"
-                  name='catName'
-                  onChange={
-                    (e) => setCatName(e.target.value)
-                  }
-                  className="form-control bg-transparent rounded-0 border-bottom shadow-none pb-15 px-0"
-                  placeholder="create new category"
-                  required
-                />
-                
-              </div>
-              </div>
-
-              <div className="col-md-12">
-              <button type="submit" className="btn btn-sm btn-primary">
-                Submit{" "}
-
-                <i className="fas fa-paper-plane"></i>
-
-                
-                
-              </button>
+        <form onSubmit={handleSubmit} className="row" noValidate>
+          <div className="col-md-12">
+            <div className="form-group mb-5">
+              
+              <input
+                type="text"
+                id="catName"
+                name="catName"
+                onChange={(e) => setCatName(e.target.value)}
+                className="form-control mb-4"
+                placeholder="create new category"
+                required
+              />
             </div>
-              </div>
-              </form>
-            
+          </div>
 
+          <div className="col-md-12 text-center">
+            <button type="submit" className="btn btn-sm btn-primary">
+              Submit <i className="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 
-        </div>
-        </div>
-        </div>
-        </div>
-
-    
     
     </>
   )

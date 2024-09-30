@@ -85,16 +85,16 @@ export default function ArticleUploadPage() {
     };
 
     return (
-      <div className="container vh-100 d-flex flex-column justify-content-start" style={{ overflowY: 'auto', paddingBottom: '50px' }}>
+      <div className="container d-flex flex-column justify-content-start">
     <div className="row justify-content-center">
         <div className="col-md-10">
-            <div className="contact-form bg-dark p-4">
-                <h4 className="text-white add-letter-space mb-4">Write New Article</h4>
+            <div className="contact-form  p-4">
+                <h4 className="add-letter-space mb-4">Write New Article</h4>
                 <form onSubmit={handleSubmit} className="needs-validation" noValidate>
                     <div className="row">
                         <div className="col-md-12">
                             <div className="form-group mb-4">
-                                <label htmlFor="title" className="text-white">Title</label>
+                                <label htmlFor="title">Title</label>
                                 <input
                                     type="text"
                                     id="title"
@@ -108,7 +108,7 @@ export default function ArticleUploadPage() {
 
                         <div className="col-md-12">
                             <div className="form-group mb-4">
-                                <label htmlFor="image" className="text-white">Upload Image</label>
+                                <label htmlFor="image" >Upload Image</label>
                                 <input
                                     type="file"
                                     id="image"
@@ -127,14 +127,14 @@ export default function ArticleUploadPage() {
 
                         <div className="col-md-12">
                             <div className="form-group mb-4">
-                                <label className="text-white">Article Categories</label>
+                                <label >Article Categories</label>
                                 <select
                                     className="d-block w-100 form-control bg-transparent border-bottom shadow-none"
                                     value={category}
                                     onChange={(e) => setCategory(e.target.value)}
                                     required
                                 >
-                                    <option value="">Select a Category</option>
+                                    <option value="">Select Article Category</option>
                                     {
                                       Array.isArray(items) ? items?.map((item) => (
 
@@ -148,20 +148,21 @@ export default function ArticleUploadPage() {
                             </div>
                         </div>
 
-                        <div className="col-md-12">
+                        <div className="col-md-12 ">
                             <div className="form-group mb-4">
-                                <label htmlFor="content" className="text-white">Content</label>
+                                <label htmlFor="content">Write Article</label>
                                 <ReactQuill
                                     value={text}
                                     onChange={setContent}
                                     className="bg-transparent"
                                     theme="snow"
-                                    style={{ height: '300px', maxHeight: '500px', overflow: 'auto' }} // Adjust height for the editor
+                                    style={{ height: '300px', maxHeight: '500px' }} // Adjust height for the editor
                                 />
                             </div>
                         </div>
+                        
 
-                        <div className="col-md-12 text-center">
+                        <div className="col-md-12  text-center" >
                             <button
                                 type="submit"
                                 className="btn btn-primary btn-lg mt-3"

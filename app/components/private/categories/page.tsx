@@ -43,47 +43,29 @@ export default function ViewingCategories() {
 
   return (
     <>
-     <div className="container py-4 my-5">
-     <div className="row">
-                <div className="col-12">
-                    <div className="bg-dark p-5 mb-5">
-                        <div className="row no-gutters">
-                            <div className="col-xl-6 border-right border-lg-0 pr-0 pr-xl-5">
-                            <h1 className="text-white add-letter-space">Code Talk</h1>
+     <section className='section'>
+        <div className='container'>
+        <div className="col-lg-12 col-md-6">
+        <div className="widget">
+                    <h3 className="section-title mb-3">Categories</h3>
+                    <div className="widget-body">
+                      <ul className="widget-list">
 
-                            <div className="breadcrumb-wrap mt-3">
-                                    <Link href="/components/private/dashboard">Dashboard</Link>
-                                    <span>/</span>
-                                    <span>Categories</span>
-                                </div>
-                            </div>
-
-                            <div className="col-xl-6 pl-0 pl-xl-5 mt-4 mt-xl-0">
-                                <div className="categores-links text-capitalize">
-                                    <h3 className="text-white add-letter-space mb-3">More Categores:</h3>
                                      
                                      {
                                         Array.isArray(items) ? items?.map((item) => (
-                                            <Link href={`/components/private/categories/${item._id}`} key={item._id}>{item.catName}</Link>
+                                        <li> <Link href={`/components/private/categories/${item._id}`} key={item._id}>{item.catName}</Link> </li>
                                         )) : <p className="border">loading....</p>
                                      }
+</ul>
+</div>
+                                     </div>
+                                     </div>
 
                                     
-                                </div>
-                            </div>
+    </div>                           
 
-                        
-
-
-
-                                </div>
-                                </div>
-                                </div>
-                                </div>
-                                </div>
-
-
-
+</section>
 
 
 
