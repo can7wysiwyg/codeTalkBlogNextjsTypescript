@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
+import { redirect } from 'next/navigation';
 
 // Dynamically import React Quill to prevent SSR issues
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
@@ -75,7 +76,8 @@ export default function ArticleUploadPage() {
             const result = await response.json();
 
             if (response.ok) {
-                setMessage('Article uploaded successfully!');
+                alert('Article uploaded successfully!');
+                window.location.reload()
             } else {
                 setMessage(result.msg || 'Failed to upload article');
             }
@@ -174,7 +176,7 @@ export default function ArticleUploadPage() {
                     </div>
                 </form>
 
-                {message && <p className="text-red-500 mt-4">{message}</p>}
+                
             </div>
         </div>
     </div>

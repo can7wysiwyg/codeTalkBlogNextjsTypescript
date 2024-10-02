@@ -26,7 +26,7 @@ export default function ArticlesByCategory() {
   const [catItem, setCatItem] = useState<CatSingle | null>(null);
   // State for pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const articlesPerPage = 2;
+  const articlesPerPage = 8;
 
 
   useEffect(() => {

@@ -48,7 +48,7 @@ export default function Calculate() {
           {adminData?.adminRole === 'cockney' ? (
           <Link className="nav-link" href="/components/private/dashboard">Dashboard</Link>
           ) : (
-           <p> </p>
+            <Link className="nav-link" href="/">Home</Link>
           )}
         </>
       ) : (

@@ -22,7 +22,7 @@ export default function Home() {
   const[articleItems, setArticleItems] = useState<Article[] | null>(null)
     // State for pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const articlesPerPage = 8;
+  const articlesPerPage = 6;
 
 
 

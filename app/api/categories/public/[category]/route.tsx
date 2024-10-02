@@ -15,8 +15,12 @@ export const GET = async(request: Request, { params }: { params: { category: str
 
         await connect()
 
-        const catItem = await Category.findById({_id: category})
+        const catItem = await Category.findById(category)
 
+        
+      
+
+                                                                              
         return NextResponse.json(catItem)
 
 
