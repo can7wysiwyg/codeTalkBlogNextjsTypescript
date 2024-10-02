@@ -943,4 +943,25 @@ footer .section {
   border-color: #131313;
   box-shadow: none;
 }
+
+.panoramic-image {
+  width: 100%!important;
+  height: auto!important;
+  object-fit: cover!important;
+  aspect-ratio: 16 / 9!important; /* Wide aspect ratio */
+  max-height: 500px!important; /* Optional: limit the height */
+  overflow: hidden!important;
+}
+
+
+.cart-image {
+  width: 100%!important;
+  height: auto!important;
+  object-fit: cover!important;
+  aspect-ratio: 16 / 9!important; /* Wide aspect ratio */
+  max-height: 500px!important; /* Optional: limit the height */
+  overflow: hidden!important;
+}
+
+
 /*# sourceMappingURL=style.css.map */

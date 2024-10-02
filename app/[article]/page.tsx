@@ -1,4 +1,5 @@
 'use client'
+import moment from 'moment'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -21,11 +22,13 @@ interface Category {
 
 
 
+
+
 export default function singleArticle() {
   const params = useParams<{ article: string }>()
   const[item, setItem] = useState<Article | null>(null)
   const [catItems, setCatItems] = useState<Category[] | null>(null);
-
+ 
 
 
   useEffect(() => {
@@ -73,9 +76,10 @@ export default function singleArticle() {
 
     }
 
-
+   
     fetchCategories()
 
+   
 
 
 }, [])
@@ -95,15 +99,12 @@ export default function singleArticle() {
 									<path d="M5.5 10.5A.5.5 0 0 1 6 10h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z" />
 									<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z" />
 									<path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z" />
-								</svg> <span>{item?.createdAt}</span>
+								</svg> <span>{moment(item?.createdAt).format('MMM D, YYYY')}</span>
 							</li>
 						</ul>
 
             <h1> {item?.articleTitle} </h1>
-						<ul className="post-meta mb-4">
-							<li> <Link href="/categories/destination">destination</Link>
-							</li>
-						</ul>
+						
 
            <div dangerouslySetInnerHTML={{ __html: item?.articleText || '' }} />
 
@@ -254,7 +255,7 @@ export default function singleArticle() {
                 Array.isArray(catItems) ? catItems?.map((catItem) => (
 
                   <li>
-                <Link key={catItem._id} href="/">
+                <Link key={catItem._id} href={`/categories/articles/${catItem._id}`}>
                   {catItem.catName}
                 </Link>
               </li>
