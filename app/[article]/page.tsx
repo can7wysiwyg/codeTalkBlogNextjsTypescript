@@ -3,6 +3,7 @@ import moment from 'moment'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import SideBar from '../SideBar'
 
 
 interface Article {
@@ -14,10 +15,6 @@ interface Article {
   createdAt: string
 }
 
-interface Category {
-  catName: string,
-  _id: string
-}
 
 
 
@@ -27,8 +24,7 @@ interface Category {
 export default function singleArticle() {
   const params = useParams<{ article: string }>()
   const[item, setItem] = useState<Article | null>(null)
-  const [catItems, setCatItems] = useState<Category[] | null>(null);
- 
+  
 
 
   useEffect(() => {
@@ -56,34 +52,7 @@ export default function singleArticle() {
   }, [])
 
 
-  useEffect(() => {
-
-    const fetchCategories = async() => {
-
-       try {
-
-        const response = await fetch('/api/categories/public')
-
-        const data = await response.json()
-        
-        setCatItems(data)
-        
-       } catch (error: any) {
-
-        console.log(`there was a problem ${error}`)
-        
-       }
-
-    }
-
-   
-    fetchCategories()
-
-   
-
-
-}, [])
-
+  
 
 
 
@@ -117,163 +86,7 @@ export default function singleArticle() {
 
         {/* testing */}
 
-        <div className="col-lg-4">
-  <div className="widget-blocks">
-    <div className="row">
-      <div className="col-lg-12">
-        <div className="widget">
-          <div className="widget-body">
-            <img
-              loading="lazy"
-              decoding="async"
-              src="images/author.jpg"
-              alt="About Me"
-              className="w-100 author-thumb-sm d-block"
-            />
-            <h2 className="widget-title my-3">Hootan Safiyari</h2>
-            <p className="mb-3 pb-2">
-              Hello, I’m Hootan Safiyari. A Content writer, Developer, and Story
-              teller. Working as a Content writer at CoolTech Agency. Quam nihil …
-            </p>
-            <a href="about.html" className="btn btn-sm btn-outline-primary">
-              Know More
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div className="col-lg-12 col-md-6">
-        <div className="widget">
-          <h2 className="section-title mb-3">Recommended</h2>
-          <div className="widget-body">
-            <div className="widget-list">
-              <article className="card mb-4">
-                <div className="card-image">
-                  <div className="post-info">
-                    <span className="text-uppercase">1 minute read</span>
-                  </div>
-                  <img
-                    loading="lazy"
-                    decoding="async"
-                    src="images/post/post-9.jpg"
-                    alt="Post Thumbnail"
-                    className="w-100"
-                  />
-                </div>
-                <div className="card-body px-0 pb-1">
-                  <h3>
-                    <a className="post-title post-title-sm" href="article.html">
-                      Portugal and France Now Allow Unvaccinated Tourists
-                    </a>
-                  </h3>
-                  <p className="card-text">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor …
-                  </p>
-                  <div className="content">
-                    <a className="read-more-btn" href="article.html">
-                      Read Full Article
-                    </a>
-                  </div>
-                </div>
-              </article>
-
-              <a className="media align-items-center" href="article.html">
-                <img
-                  loading="lazy"
-                  decoding="async"
-                  src="images/post/post-2.jpg"
-                  alt="Post Thumbnail"
-                  className="w-100"
-                />
-                <div className="media-body ml-3">
-                  <h3 style={{ marginTop: '-5px' }}>
-                    These Are Making It Easier To Visit
-                  </h3>
-                  <p className="mb-0 small">
-                    Heading Here is an example of headings. You can use …
-                  </p>
-                </div>
-              </a>
-
-              <a className="media align-items-center" href="article.html">
-                <span className="image-fallback image-fallback-xs">
-                  No Image Specified
-                </span>
-                <div className="media-body ml-3">
-                  <h3 style={{ marginTop: '-5px' }}>No Image specified</h3>
-                  <p className="mb-0 small">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing …
-                  </p>
-                </div>
-              </a>
-
-              <a className="media align-items-center" href="article.html">
-                <img
-                  loading="lazy"
-                  decoding="async"
-                  src="images/post/post-5.jpg"
-                  alt="Post Thumbnail"
-                  className="w-100"
-                />
-                <div className="media-body ml-3">
-                  <h3 style={{ marginTop: '-5px' }}>Perfect For Fashion</h3>
-                  <p className="mb-0 small">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing …
-                  </p>
-                </div>
-              </a>
-
-              <a className="media align-items-center" href="article.html">
-                <img
-                  loading="lazy"
-                  decoding="async"
-                  src="images/post/post-9.jpg"
-                  alt="Post Thumbnail"
-                  className="w-100"
-                />
-                <div className="media-body ml-3">
-                  <h3 style={{ marginTop: '-5px' }}>Record Ultra Smooth Video</h3>
-                  <p className="mb-0 small">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing …
-                  </p>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="col-lg-12 col-md-6">
-        <div className="widget">
-          <h2 className="section-title mb-3">Categories</h2>
-          <div className="widget-body">
-            <ul className="widget-list">
-              
-
-              {
-                Array.isArray(catItems) ? catItems?.map((catItem) => (
-
-                  <li>
-                <Link key={catItem._id} href={`/categories/articles/${catItem._id}`}>
-                  {catItem.catName}
-                </Link>
-              </li>
-
-
-                )) : "LOADING..."
-              }
-              
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
+        <SideBar />
 
 {/* testing */}
 

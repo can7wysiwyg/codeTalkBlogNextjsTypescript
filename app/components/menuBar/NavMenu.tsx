@@ -43,7 +43,7 @@ export default  async  function NavMenu() {
 
           </li>
           <li className="nav-item">
-            <Link className="nav-link" href="about.html">About Me</Link>
+            <Link className="nav-link" href="/details/about">About Me</Link>
           </li>
           <li className="nav-item dropdown">
             <Link
@@ -61,7 +61,7 @@ export default  async  function NavMenu() {
                           </ul>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" href="contact.html">Contact</Link>
+            <Link className="nav-link" href="/details/contact/">Contact</Link>
           </li>
 
           <li className="nav-item">
