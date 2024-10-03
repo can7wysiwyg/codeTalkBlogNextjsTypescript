@@ -18,7 +18,7 @@ export default function Footer() {
             alt="CodeTalk"
           />
         </Link>
-        <ul className="p-0 d-flex navbar-footer mb-0 list-unstyled">
+        {/* <ul className="p-0 d-flex navbar-footer mb-0 list-unstyled">
           <li className="nav-item my-0">
             <Link className="nav-link" href="about.html">
               About
@@ -35,7 +35,7 @@ export default function Footer() {
             </Link>
           </li>
           
-        </ul>
+        </ul> */}
       </div>
     </div>
   </div>

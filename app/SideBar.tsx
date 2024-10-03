@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import Link from "next/link";
@@ -120,7 +122,7 @@ export default function SideBar() {
                           <div className="card-body px-0 pb-1">
                             <h3>
                               <Link
-                                href={`/article/${article._id}`}
+                                href={`/${article._id}`}
                                 className="post-title post-title-sm"
                               >
                                 {article.articleTitle}
@@ -134,7 +136,7 @@ export default function SideBar() {
                             
                             <div className="content">
                               <Link
-                                href={`/article/${article._id}`}
+                                href={`/${article._id}`}
                                 className="read-more-btn"
                               >
                                 Read Full Article
