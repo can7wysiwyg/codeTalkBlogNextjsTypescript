@@ -3,10 +3,15 @@ import Calculate from './authlogic/Calculate';
 import Logout from './authlogic/Logout';
 import Link from 'next/link';
 import DropMenu from './DropMenu';
+import { redirect } from 'next/navigation';
 
 export default async function NavMenu() {
   const session = await getSession();
+  
 
+  
+
+   
   return (
     <header className="navigation">
       <div className="container">

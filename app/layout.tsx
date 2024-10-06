@@ -8,6 +8,7 @@ import "./globals.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import MobileMenu from "./components/menuBar/DropMenu";
 import Footer from "./Footer";
+import { SessionProvider } from "next-auth/react";
 
 
 
@@ -34,6 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <SessionProvider>
     <html lang="en">
 
 <Head>
@@ -82,5 +84,6 @@ export default function RootLayout({
 
       </body>
     </html>
+    </SessionProvider>
   );
 }

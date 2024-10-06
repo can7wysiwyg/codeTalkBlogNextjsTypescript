@@ -74,7 +74,7 @@ const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
               {
                 Array.isArray(currentArticles) ? currentArticles?.map((articleItem) => (
 
-                  <div className="col-12 mb-4">
+                  <div key={articleItem._id} className="col-12 mb-4">
                 <article className="card article-card">
                 
                   <Link href={`${articleItem._id}`}>
