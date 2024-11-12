@@ -1,8 +1,9 @@
 import NextAuth, { CredentialsSignin } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { compare } from "bcryptjs"
-import { Admin } from "./db/models/Admin"
-import connect from "./db/db"
+import { PrismaClient } from "@prisma/client"
+
+const prisma = new PrismaClient()
 
 
 
@@ -28,9 +29,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
 
 
-        await connect()
-
-        const user = await Admin.findOne({email}).select("+password +adminRole")
+        const user = await prisma.admin.findUnique({
+          where: {
+              email: email // Replace with the actual email value
+          },
+          select: {
+              password: true,  // Select password field
+              adminRole: true,  // Select adminRole field
+              email: true,
+              id: true
+          }
+      });
+      
+        
+        // Admin.findOne({email}).select("+password +adminRole")
 
 
         if(!user) {
@@ -56,9 +68,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         const userData = {
           // firstName: user.fullname,
-          email: user.email,
+          email: user?.email,
           role: user.adminRole,
-          id: user._id
+          id: user?.id
         }
   
 
@@ -113,3 +125,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }
   }
 })
+
+
+export const config = {
+  runtime: "nodejs",
+  unstable_allowDynamic: [
+      
+      "/db/db.ts",
+      // Allows dynamic imports for all Mongoose modules
+      "/node_modules/mongoose/dist/**",
+  ],
+};

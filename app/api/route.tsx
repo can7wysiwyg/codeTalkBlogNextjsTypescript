@@ -1,7 +1,10 @@
-import connect from "@/db/db";
 import { getSession } from "@/db/getSession";
-import { Admin } from "@/db/models/Admin";
+import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
+
+
+const prisma = new PrismaClient()
+
 
 export const GET = async (request: Request) => {
   try {
@@ -17,11 +20,19 @@ export const GET = async (request: Request) => {
       return NextResponse.json({ msg: "The ID is invalid" }, { status: 400 });
     }
 
-    await connect();
-
+   
     // Use .lean() to get plain JavaScript objects
-    const adminFound = await Admin.findById(id).lean();
-
+    const adminFound = await prisma.admin.findUnique({
+      where: {
+          id: id,  // Replace with actual admin ID
+      },
+      select: {
+          password: true,
+          adminRole: true
+      }
+  });
+  
+    
     if (!adminFound) {
       return NextResponse.json({ msg: "Admin not found" }, { status: 404 });
     }
