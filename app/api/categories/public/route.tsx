@@ -1,15 +1,19 @@
-import connect from "@/db/db"
-import { Category } from "@/db/models/Category"
+import { PrismaClient } from "@prisma/client"
 import { NextResponse } from "next/server"
+
+const prisma = new PrismaClient()
 
 export const GET = async(request: Request) => {
 
     try {
 
-        await connect()
-
-        const categories = await Category.find().sort({_id: -1})
-
+        const categories = await prisma.category.findMany({
+            orderBy: {
+              id: 'asc'  
+            } });
+          
+        
+        
         return NextResponse.json(categories)
         
     } catch (error: any) {

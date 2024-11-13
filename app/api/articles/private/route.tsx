@@ -1,10 +1,11 @@
 import { v2 as cloudinary } from 'cloudinary';
-import connect from "@/db/db";
 import { getSession } from "@/db/getSession";
-import { Article } from "@/db/models/Article";
 import { NextResponse } from "next/server";
 import { Readable } from 'stream';
-import { Admin } from '@/db/models/Admin';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient
+
 
 
 // Cloudinary configuration
@@ -71,14 +72,14 @@ export const POST = async (request: Request) => {
         });
 
         // Connect to MongoDB
-        await connect();
+        
+        const adminExists = await prisma.admin.findUnique({
+            where: {email: sessEmail}
+        })
+        
 
-        const adminExists = await Admin.findOne({email: sessEmail})
 
-
-
-
-if(adminExists.adminRole !== "cockney")  {
+if(adminExists?.adminRole !== "cockney")  {
     
     return NextResponse.json({msg: "authorization error"})
     
@@ -106,13 +107,19 @@ if(adminExists.adminRole !== "cockney")  {
           
         
         // Create a new article document in MongoDB with the image URL from Cloudinary
-        const newArticle = await Article.create({
-            articleTitle,
-            articleImage: (uploadResponse as any).secure_url,  // Get the Cloudinary URL here
-            articleCategory,
-            articleText
-        });
+        const newArticle = await prisma.article.create({
+            data: {
+                articleTitle,
+                articleImage: (uploadResponse as any).secure_url,  // Get the Cloudinary URL here
+                articleCategoryId: articleCategory,
+                articleText
+            }
 
+        })
+        
+        
+        
+       
         
 
         return NextResponse.json({ msg: "Article created successfully", article: newArticle });

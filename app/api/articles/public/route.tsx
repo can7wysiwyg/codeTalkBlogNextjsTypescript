@@ -1,14 +1,15 @@
-import connect from "@/db/db"
-import { Article } from "@/db/models/Article"
+
+import { PrismaClient } from "@prisma/client"
 import { NextResponse } from "next/server"
+
+const prisma = new PrismaClient()
 
 export const GET = async(request: Request) => {
 
     try {
 
-        await connect()
-
-        const articles = await Article.find().sort({_id: -1})
+        
+        const articles = await prisma.article.findMany()
 
         return NextResponse.json(articles)
         

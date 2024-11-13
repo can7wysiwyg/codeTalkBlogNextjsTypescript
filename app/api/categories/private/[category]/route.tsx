@@ -1,10 +1,9 @@
-import connect from "@/db/db"
 import { getSession } from "@/db/getSession"
-import { Admin } from "@/db/models/Admin"
-import { Category } from "@/db/models/Category"
+import { PrismaClient } from "@prisma/client"
 import { redirect } from "next/navigation"
 import { NextResponse } from "next/server"
 
+const prisma = new PrismaClient()
 
 export const PATCH = async(request: Request, {params}: {params: {category: string}}) => {
 
@@ -34,21 +33,34 @@ if(!sessEmail) {
 }
 
 
-await connect()
 
-const adminExists = await Admin.findOne({email: sessEmail})
+const adminExists = await prisma.admin.findUnique({
+    where: {
+        email: sessEmail
+    },
+    select: {
+        password: true,
+        adminRole: true
+    }
+})
 
 
 
 
-if(adminExists.adminRole !== "cockney")  {
+
+if(adminExists?.adminRole !== "cockney")  {
     
     return NextResponse.json({msg: "authorization error"})
     
 }
 
 
-await Category.findByIdAndUpdate({_id: category}, {catName}, {new: true})
+await prisma.category.update({
+    where: {id: category},
+    data: {
+        catName
+    }
+}) 
 
 
 return NextResponse.json({msg: "successfully updated"})

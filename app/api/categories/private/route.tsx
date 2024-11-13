@@ -1,9 +1,10 @@
-import connect from "@/db/db"
 import { getSession } from "@/db/getSession"
-import { Category } from "@/db/models/Category"
+import { PrismaClient } from "@prisma/client"
 import { redirect } from "next/navigation"
 import { NextResponse } from "next/server"
 
+
+const prisma = new PrismaClient()
 
 export const POST = async(request: Request) => {
     try {
@@ -23,11 +24,8 @@ export const POST = async(request: Request) => {
 
         }
 
-        await connect()
-
-        await Category.create({
-            catName
-        }) 
+        
+        await prisma.category.create({ data: {catName} }) 
 
         
 

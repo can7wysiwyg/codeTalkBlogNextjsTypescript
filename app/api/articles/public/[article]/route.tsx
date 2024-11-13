@@ -1,6 +1,8 @@
-import connect from "@/db/db"
-import { Article } from "@/db/models/Article"
+import { PrismaClient } from "@prisma/client"
 import { NextResponse } from "next/server"
+
+
+ const prisma = new PrismaClient() 
 
 export const GET = async(request: Request, {params} : {params: {article: string}}) => {
 
@@ -9,8 +11,9 @@ export const GET = async(request: Request, {params} : {params: {article: string}
         const {article} = params
 
 
-        await connect()
-  const articleSingle = await Article.findById({_id: article})
+        
+  const articleSingle = await prisma.article.findUnique({where: {id: article}})
+  
 
   return NextResponse.json(articleSingle)
 

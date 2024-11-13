@@ -1,6 +1,9 @@
-import connect from "@/db/db";
-import { Category } from "@/db/models/Category";
+import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server"
+
+
+const prisma = new PrismaClient()
+
 
 export const GET = async(request: Request, { params }: { params: { category: string } }) => {
 
@@ -13,13 +16,10 @@ export const GET = async(request: Request, { params }: { params: { category: str
             return NextResponse.json({msg: "there was no id provided"})
         }
 
-        await connect()
-
-        const catItem = await Category.findById(category)
-
         
-      
-
+        const catItem = await prisma.category.findUnique({where: {id: category}})
+        
+        
                                                                               
         return NextResponse.json(catItem)
 

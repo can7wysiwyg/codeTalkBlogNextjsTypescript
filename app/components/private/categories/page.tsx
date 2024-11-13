@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 
 interface Category {
     catName: string,
-    _id: string
+    id: string
 }
 
 export default function ViewingCategories() {
@@ -39,7 +39,6 @@ export default function ViewingCategories() {
 
     }, [])
 
-    
 
   return (
     <>
@@ -50,12 +49,17 @@ export default function ViewingCategories() {
                     <h3 className="section-title mb-3">Categories</h3>
                     <div className="widget-body">
                       <ul className="widget-list">
+                        
 
                                      
                                      {
                                         Array.isArray(items) ? items?.map((item) => (
-                                        <li> <Link href={`/components/private/categories/${item._id}`} key={item._id}>{item.catName}</Link> </li>
-                                        )) : <p className="border">loading....</p>
+                                    
+                                        <li> 
+                                        
+                                          <Link href={`/components/private/categories/${item.id}`} key={item.id}>{item.catName}</Link> </li>
+                                        )) : <p className="border">loading.... </p>
+
                                      }
 </ul>
 </div>

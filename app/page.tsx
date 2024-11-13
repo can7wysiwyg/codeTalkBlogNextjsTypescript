@@ -7,10 +7,10 @@ import SideBar from "./SideBar";
 
 
 interface Article {
-  _id: string,
+  id: string,
   articleTitle: string,
   articleImage: string,
-  articleCategory: string,
+  articleCategoryId: string,
   articleText: string,
   createdAt: Date
 }
@@ -51,7 +51,6 @@ export default function Home() {
   }, [])
 
 
-  
 
 // Pagination logic
 const indexOfLastArticle = currentPage * articlesPerPage;
@@ -74,10 +73,10 @@ const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
               {
                 Array.isArray(currentArticles) ? currentArticles?.map((articleItem) => (
 
-                  <div key={articleItem._id} className="col-12 mb-4">
+                  <div key={articleItem.id} className="col-12 mb-4">
                 <article className="card article-card">
                 
-                  <Link href={`${articleItem._id}`}>
+                  <Link href={`${articleItem.id}`}>
                     <div className="card-image">
                     <div className="post-info">
                             {" "}
@@ -102,7 +101,7 @@ const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
                       </li>
                     </ul>
                     <h2 className="h1">
-                      <Link className="post-title" href={`${articleItem._id}`}>
+                      <Link className="post-title" href={`${articleItem.id}`}>
                         {articleItem.articleTitle}
                       </Link>
                     </h2>
@@ -111,7 +110,7 @@ const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
                       <ShowPartialArticle articleItem={articleItem} />
                     </p>
                     <div className="content">
-                      <Link className="read-more-btn" href={`${articleItem._id}`}>
+                      <Link className="read-more-btn" href={`${articleItem.id}`}>
                         Read Full Article
                       </Link>
                     </div>
@@ -253,7 +252,7 @@ const ShowPartialArticle = ({ articleItem }: { articleItem: Article }) => {
           {isExpanded ? (
             ""
           ) : (
-            <Link href={`${articleItem._id}`}>see more</Link>
+            <Link href={`${articleItem.id}`}>see more</Link>
           )}
         </span>
       )}

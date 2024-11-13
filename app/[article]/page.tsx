@@ -7,10 +7,10 @@ import SideBar from '../SideBar'
 
 
 interface Article {
-  _id: string,
+  id: string,
   articleTitle: string,
   articleImage: string,
-  articleCategory: string,
+  articleCategoryId: string,
   articleText: string,
   createdAt: string
 }

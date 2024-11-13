@@ -11,7 +11,7 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 interface Category {
   catName: string,
-  _id: string
+  id: string
 }
 
 
@@ -140,7 +140,7 @@ export default function ArticleUploadPage() {
                                     {
                                       Array.isArray(items) ? items?.map((item) => (
 
-                                        <option value={item._id}>{item.catName}</option>
+                                        <option value={item.id}>{item.catName}</option>
 
 
                                       )) : "LOADING..."
@@ -162,9 +162,20 @@ export default function ArticleUploadPage() {
                                 />
                             </div>
                         </div>
+                        <br>
                         
-
+                        </br>
+                        
                         <div className="col-md-12  text-center" >
+                            <br>
+                            
+                            
+                            </br>
+
+                            <br>
+                        
+                        </br>
+
                             <button
                                 type="submit"
                                 className="btn btn-primary btn-lg mt-3"

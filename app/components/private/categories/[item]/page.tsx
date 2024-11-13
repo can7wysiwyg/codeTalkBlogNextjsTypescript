@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 
 interface Category {
     catName: string,
-    _id: string
+    id: string
 }
 
 
@@ -46,6 +46,7 @@ export default function () {
 
        }, [])
 
+      
 
        const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 
