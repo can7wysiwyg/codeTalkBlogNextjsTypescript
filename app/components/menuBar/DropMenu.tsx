@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 
 interface Category {
   catName: string,
-  _id: string
+  id: string
 }
 
 
@@ -50,7 +50,7 @@ export default function DropMenu() {
 {
 
   Array.isArray(items) ? items?.map((item) => (
-    <Link key={item._id} href={`/categories/articles/${item._id}`} className="dropdown-item">{item.catName}</Link>
+    <Link key={item.id} href={`/categories/articles/${item.id}`} className="dropdown-item">{item.catName}</Link>
 
   )) : "LOADING..."
 

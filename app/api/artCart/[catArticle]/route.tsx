@@ -1,6 +1,7 @@
-import connect from "@/db/db"
-import { Article } from "@/db/models/Article"
+import { PrismaClient } from "@prisma/client"
 import { NextResponse } from "next/server"
+
+const prisma = new PrismaClient()
 
 export const GET = async(request: Request, {params}: {params: {catArticle: string}}) => {
 
@@ -9,11 +10,9 @@ export const GET = async(request: Request, {params}: {params: {catArticle: strin
         const {catArticle} = params
 
         
-
-        await connect()
-
-        const articles = await Article.find({articleCategory: catArticle})
-
+        const articles = await prisma.article.findMany({where: {articleCategoryId: catArticle}})
+        
+        
         return NextResponse.json(articles)
         
     } catch (error: any) {

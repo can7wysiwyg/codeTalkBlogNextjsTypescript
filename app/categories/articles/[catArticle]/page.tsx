@@ -7,10 +7,10 @@ import moment from "moment";
 import SideBar from "@/app/SideBar";
 
 interface Article {
-  _id: string;
+  id: string;
   articleTitle: string;
   articleImage: string;
-  articleCategory: string;
+  articleCategoryId: string;
   articleText: string;
   createdAt: Date;
 }
@@ -92,7 +92,7 @@ const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
             <div className="row">
               {Array.isArray(currentArticles)
                 ? currentArticles?.map((articleItem) => (
-                    <div key={articleItem._id} className="col-md-6 mb-4">
+                    <div key={articleItem.id} className="col-md-6 mb-4">
                       <article className="card article-card article-card-sm h-100">
                         <div className="card-image">
                           <div className="post-info">
@@ -114,7 +114,7 @@ const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
                         <div className="card-body px-0 pb-0">
                           
                           <h2>
-                            <Link className="post-title" href={`/${articleItem._id}`}>
+                            <Link className="post-title" href={`/${articleItem.id}`}>
                              {articleItem.articleTitle}
                             </Link>
                           </h2>
@@ -127,7 +127,7 @@ const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
                             {" "}
                             <a
                               className="read-more-btn"
-                              href={`/${articleItem._id}`}
+                              href={`/${articleItem.id}`}
                             >
                               Read Full Article
                             </a>
