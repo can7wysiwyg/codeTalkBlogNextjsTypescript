@@ -64,6 +64,14 @@ export default function ArticlesByCategory() {
   }, []);
 
 
+   // Function to handle article click
+   const handleArticleClick = (articleCategoryId: string) => {
+    localStorage.removeItem("articleCategoryId"); // Clear previous ID
+    localStorage.setItem("articleCategoryId", articleCategoryId); // Store new ID
+  };
+
+
+
   // Pagination logic
 const indexOfLastArticle = currentPage * articlesPerPage;
 const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
@@ -114,7 +122,9 @@ const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
                         <div className="card-body px-0 pb-0">
                           
                           <h2>
-                            <Link className="post-title" href={`/${articleItem.id}`}>
+                            <Link className="post-title" href={`/${articleItem.id}`}
+                            onClick={() => handleArticleClick(articleItem.articleCategoryId)}
+                            >
                              {articleItem.articleTitle}
                             </Link>
                           </h2>
@@ -128,6 +138,8 @@ const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
                             <a
                               className="read-more-btn"
                               href={`/${articleItem.id}`}
+                              onClick={() => handleArticleClick(articleItem.articleCategoryId)}
+
                             >
                               Read Full Article
                             </a>

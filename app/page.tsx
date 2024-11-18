@@ -6,60 +6,48 @@ import React, { useEffect, useState } from "react";
 import SideBar from "./SideBar";
 
 
+
 interface Article {
-  id: string,
-  articleTitle: string,
-  articleImage: string,
-  articleCategoryId: string,
-  articleText: string,
-  createdAt: Date
+  id: string;
+  articleTitle: string;
+  articleImage: string;
+  articleCategoryId: string;
+  articleText: string;
+  createdAt: Date;
 }
 
-
-
-
 export default function Home() {
-  const[articleItems, setArticleItems] = useState<Article[] | null>(null)
-    // State for pagination
+  const [articleItems, setArticleItems] = useState<Article[] | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const articlesPerPage = 6;
 
-
-
-
   useEffect(() => {
+    const fetchArticles = async () => {
+      const response = await fetch("/api/articles/public");
 
-    const fetchArticles = async() => {
-
-      const response = await fetch('/api/articles/public')
-
-      if(!response.ok) {
-        alert('there was a problem')
+      if (!response.ok) {
+        alert("there was a problem");
       }
 
-        const data = await response.json()
+      const data = await response.json();
+      setArticleItems(data);
+    };
 
-        setArticleItems(data)
+    fetchArticles();
+  }, []);
 
+  // Pagination logic
+  const indexOfLastArticle = currentPage * articlesPerPage;
+  const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
+  const currentArticles = articleItems?.slice(indexOfFirstArticle, indexOfLastArticle);
 
-    }
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-    fetchArticles()
-
-
-
-  }, [])
-
-
-
-// Pagination logic
-const indexOfLastArticle = currentPage * articlesPerPage;
-const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
-const currentArticles = articleItems?.slice(indexOfFirstArticle, indexOfLastArticle);
-
-const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
-
-
+  // Function to handle article click
+  const handleArticleClick = (articleCategoryId: string) => {
+    localStorage.removeItem("articleCategoryId"); // Clear previous ID
+    localStorage.setItem("articleCategoryId", articleCategoryId); // Store new ID
+  };
 
   return (
     <main>
@@ -69,87 +57,86 @@ const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
           <div className="col-lg-8 mb-5 mb-lg-0">
             <h2 className="section-title">Latest Articles</h2>
             <div className="row">
-
-              {
-                Array.isArray(currentArticles) ? currentArticles?.map((articleItem) => (
-
+              {Array.isArray(currentArticles) ? (
+                currentArticles.map((articleItem) => (
                   <div key={articleItem.id} className="col-12 mb-4">
-                <article className="card article-card">
-                
-                  <Link href={`${articleItem.id}`}>
-                    <div className="card-image">
-                    <div className="post-info">
-                            {" "}
-                            <span className="text-uppercase">{moment(articleItem.createdAt).format('MMM D, YYYY')}</span>
-                            
+                    <article className="card article-card">
+                      {/* Add onClick to the link */}
+                      <Link
+                        href={`${articleItem.id}`}
+                        onClick={() => handleArticleClick(articleItem.articleCategoryId)}
+                      >
+                        <div className="card-image">
+                          <div className="post-info">
+                            <span className="text-uppercase">
+                              {moment(articleItem.createdAt).format("MMM D, YYYY")}
+                            </span>
                           </div>
-                      
-                      <img
-                        loading="lazy"
-                        decoding="async"
-                        src={articleItem.articleImage}
-                        alt="Post Thumbnail"
-                        className="w-100 panoramic-image"
-                      />
-                    </div>
-                  </Link>
-                  <div className="card-body px-0 pb-1">
-                    <ul className="post-meta mb-2">
-                      <li>
-                        <span>CodeTalk</span> / 
-                        <span>Articles</span>
-                      </li>
-                    </ul>
-                    <h2 className="h1">
-                      <Link className="post-title" href={`${articleItem.id}`}>
-                        {articleItem.articleTitle}
+
+                          <img
+                            loading="lazy"
+                            decoding="async"
+                            src={articleItem.articleImage}
+                            alt="Post Thumbnail"
+                            className="w-100 panoramic-image"
+                          />
+                        </div>
                       </Link>
-                    </h2>
-                    <p className="card-text" >
-                    
-                      <ShowPartialArticle articleItem={articleItem} />
-                    </p>
-                    <div className="content">
-                      <Link className="read-more-btn" href={`${articleItem.id}`}>
-                        Read Full Article
-                      </Link>
-                    </div>
+                      <div className="card-body px-0 pb-1">
+                        <ul className="post-meta mb-2">
+                          <li>
+                            <span>CodeTalk</span> / <span>Articles</span>
+                          </li>
+                        </ul>
+                        <h2 className="h1">
+                          <Link
+                            className="post-title"
+                            href={`${articleItem.id}`}
+                            onClick={() => handleArticleClick(articleItem.articleCategoryId)}
+                          >
+                            {articleItem.articleTitle}
+                          </Link>
+                        </h2>
+                        <p className="card-text">
+                          {/* Assuming ShowPartialArticle component renders part of the article */}
+                          <ShowPartialArticle articleItem={articleItem} />
+                        </p>
+                        <div className="content">
+                          <Link
+                            className="read-more-btn"
+                            href={`${articleItem.id}`}
+                            onClick={() => handleArticleClick(articleItem.articleCategoryId)}
+                          >
+                            Read Full Article
+                          </Link>
+                        </div>
+                      </div>
+                    </article>
                   </div>
-                </article>
-              </div>
-
-
-
-
-                )) : "LOADING..."
-              }
-              
+                ))
+              ) : (
+                "LOADING..."
+              )}
             </div>
           </div>
 
           {/* Sidebar Section */}
-
           <SideBar />
-          
+
         </div>
 
         {/* Pagination */}
-
         <PaginationComp
-         articlesPerPage={articlesPerPage}
-         totalArticles={articleItems?.length}
-         paginate={paginate}
-         currentPage={currentPage}
-        
-        
+          articlesPerPage={articlesPerPage}
+          totalArticles={articleItems?.length}
+          paginate={paginate}
+          currentPage={currentPage}
         />
-        
-
-        {/* pagination ends */}
       </div>
     </main>
   );
 }
+
 
 const PaginationComp = ({
   articlesPerPage,
