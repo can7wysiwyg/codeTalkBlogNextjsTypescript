@@ -9,11 +9,13 @@ export const GET = async(request: Request) => {
     try {
 
         
-    const  articles = await prisma.article.findMany({
-            orderBy: {
-              createdAt: 'desc', 
-            },
-          });
+    const  articles = await prisma.article.findMany();
+
+    // {
+    //   orderBy: {
+    //     createdAt: 'desc', 
+    //   },
+    // }
 
         return NextResponse.json(articles)
         

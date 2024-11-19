@@ -24,40 +24,52 @@ export default function SideBar() {
   const [articleItems, setArticleItems] = useState<Article[] | null>(null);
   const [recommendedArticles, setRecommendedArticles] = useState<Article[]>([]);
 
+  
   useEffect(() => {
     // Fetch all articles
     const fetchArticles = async () => {
       const response = await fetch("/api/articles/public");
-
+  
       if (!response.ok) {
         alert("There was a problem");
         return;
       }
-
+  
       const data = await response.json();
       setArticleItems(data);
-
-    
+  
       const storedCategoryId = localStorage.getItem("articleCategoryId");
- console.log(storedCategoryId)
-
+  
       if (storedCategoryId) {
-        
+       
         const filteredArticles = data.filter(
           (article: Article) => article.articleCategoryId === storedCategoryId
         );
-        setRecommendedArticles(filteredArticles.slice(0, 3)); 
+  
+       
+        const findMiddleArticles = (articles: Article[]) => {
+          if (articles.length < 3) return articles; 
+          const midIndex = Math.floor(articles.length / 2);
+          return articles.slice(midIndex - 1, midIndex + 2); 
+        };
+  
+        
+        setRecommendedArticles(findMiddleArticles(filteredArticles));
       } else {
         
-        setRecommendedArticles(data.slice(0, 2));
+        const sortedArticles = [...data].sort(
+          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+        setRecommendedArticles(sortedArticles.slice(0, 3));
       }
     };
-
+  
     fetchArticles();
   }, []);
+  
 
   useEffect(() => {
-    // Fetch all categories
+  
     const fetchCategories = async () => {
       try {
         const response = await fetch("/api/categories/public");

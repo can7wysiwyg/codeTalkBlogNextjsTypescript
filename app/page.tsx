@@ -43,6 +43,10 @@ export default function Home() {
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
+  const sortedArticles = [...currentArticles || []].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
+
   // Function to handle article click
   const handleArticleClick = (articleCategoryId: string) => {
     localStorage.removeItem("articleCategoryId"); // Clear previous ID
@@ -57,8 +61,8 @@ export default function Home() {
           <div className="col-lg-8 mb-5 mb-lg-0">
             <h2 className="section-title">Latest Articles</h2>
             <div className="row">
-              {Array.isArray(currentArticles) ? (
-                currentArticles.map((articleItem) => (
+              {Array.isArray(sortedArticles) ? (
+                sortedArticles?.map((articleItem) => (
                   <div key={articleItem.id} className="col-12 mb-4">
                     <article className="card article-card">
                       {/* Add onClick to the link */}
