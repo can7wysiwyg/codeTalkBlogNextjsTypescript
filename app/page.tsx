@@ -84,6 +84,8 @@ export default function Home() {
                             src={articleItem.articleImage}
                             alt="Post Thumbnail"
                             className="w-100 panoramic-image"
+                            width={100}
+                            height={100}
                           />
                         </div>
                       </Link>

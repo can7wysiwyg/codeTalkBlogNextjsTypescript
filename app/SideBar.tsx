@@ -94,13 +94,15 @@ export default function SideBar() {
           <div className="col-lg-12">
             <div className="widget">
               <div className="widget-body">
-                <Image
+                {/* <Image
                   loading="lazy"
                   decoding="async"
-                  src="images/author.jpg"
+                  src="https://cdn.britannica.com/82/93182-050-E03416A7/Marilyn-Monroe.jpg"
                   alt="About Me"
                   className="w-100 author-thumb-sm d-block"
-                />
+                  width={100}
+                  height={100}
+                /> */}
                 <h2 className="widget-title my-3">Paul Kasusa</h2>
                 <p className="mb-3 pb-2">
                   Hello, I am Paul Kasusa. A Website Developer and Tech Writer.
@@ -131,6 +133,8 @@ export default function SideBar() {
                             src={article.articleImage}
                             alt="Post Thumbnail"
                             className="w-100"
+                            width={100}
+                            height={100}
                           />
                         </div>
                         <div className="card-body px-0 pb-1">
