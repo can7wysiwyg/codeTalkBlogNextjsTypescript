@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import moment from "moment";
+
 import Link from "next/link";
-import { log } from "console";
+import Image from "next/image";
+
 
 interface Article {
   _id: string;
@@ -75,13 +76,15 @@ export default function SideBar() {
         const response = await fetch("/api/categories/public");
         const data = await response.json();
         setCatItems(data);
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.log(`There was a problem ${error}`);
       }
     };
 
     fetchCategories();
   }, []);
+
+  console.log(articleItems)
 
   return (
     <div className="col-lg-4">
@@ -91,7 +94,7 @@ export default function SideBar() {
           <div className="col-lg-12">
             <div className="widget">
               <div className="widget-body">
-                <img
+                <Image
                   loading="lazy"
                   decoding="async"
                   src="images/author.jpg"
@@ -122,7 +125,7 @@ export default function SideBar() {
                     recommendedArticles.map((article) => (
                       <article key={article._id} className="card mb-4">
                         <div className="card-image">
-                          <img
+                          <Image
                             loading="lazy"
                             decoding="async"
                             src={article.articleImage}

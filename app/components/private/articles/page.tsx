@@ -17,7 +17,7 @@ interface Article {
 
 }
 
-export default function adminArticles() {
+export default function AdminArticles() {
 
     const[items, setItems] = useState<Article[] | null>(null)
     // State for pagination
@@ -53,7 +53,7 @@ const indexOfLastArticle = currentPage * articlesPerPage;
 const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
 const currentArticles = items?.slice(indexOfFirstArticle, indexOfLastArticle);
 
-const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
+const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
 
   return (
@@ -84,7 +84,7 @@ const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
                             <span className="text-uppercase">{moment(articleItem.createdAt).format('MMM D, YYYY')}</span>
                             
                           </div>
-                          <img
+                          <Image
                             loading="lazy"
                             decoding="async"
                             src={articleItem.articleImage}
@@ -127,7 +127,7 @@ const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
 
 <PaginationComp
          articlesPerPage={articlesPerPage}
-         totalArticles={items?.length}
+         totalArticles={items?.length ?? 0}
          paginate={paginate}
          currentPage={currentPage}
         
@@ -164,7 +164,7 @@ const PaginationComp = ({
     currentPage,
   }: {
     articlesPerPage: number;
-    totalArticles: any;
+    totalArticles: number;
     paginate: (pageNumber: number) => void;
     currentPage: number;
   }) => {

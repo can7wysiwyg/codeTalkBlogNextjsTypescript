@@ -3,10 +3,18 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
+
+interface Result {
+  _id: string;
+  articleTitle: string;
+  
+}
+
+
 export default function SearchResults() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('s'); // Get the search query from URL
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<Result[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -36,7 +44,7 @@ export default function SearchResults() {
       ) : results.length > 0 ? (
         <ul>
           {results.map((result) => (
-            <li key={result.id}>
+            <li key={result._id}>
               <Link href={`/${result._id}`}>{result.articleTitle}</Link>
             </li>
           ))}

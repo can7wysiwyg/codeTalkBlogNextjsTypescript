@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import moment from "moment";
+import Image from 'next/image';
 import SideBar from "@/app/SideBar";
 
 interface Article {
@@ -43,7 +44,7 @@ export default function ArticlesByCategory() {
     };
 
     fetchArticles();
-  }, []);
+  }, [catArticle]);
 
   useEffect(() => {
     
@@ -61,7 +62,7 @@ export default function ArticlesByCategory() {
 
     
     fetchCat();
-  }, []);
+  }, [catArticle]);
 
 
    // Function to handle article click
@@ -77,7 +78,7 @@ const indexOfLastArticle = currentPage * articlesPerPage;
 const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
 const currentArticles = articleItems?.slice(indexOfFirstArticle, indexOfLastArticle);
 
-const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
+const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
 
   return (
@@ -108,15 +109,18 @@ const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
                             <span className="text-uppercase">{moment(articleItem.createdAt).format('MMM D, YYYY')}</span>
                             
                           </div>
-                          <img
-                            loading="lazy"
-                            decoding="async"
-                            src={articleItem.articleImage}
-                            alt="Post Thumbnail"
-                            className="w-100 cart-image"
-                            width="420"
-                            height="280"
-                          />
+
+                          <Image
+  src={articleItem.articleImage}
+  alt="Post Thumbnail"
+  layout="responsive"
+  width={420}
+  height={280}
+/>
+
+
+                          
+                          
                         </div>
 
                         <div className="card-body px-0 pb-0">
@@ -155,7 +159,7 @@ const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
 
 <PaginationComp
          articlesPerPage={articlesPerPage}
-         totalArticles={articleItems?.length}
+         totalArticles={articleItems?.length ?? 0}
          paginate={paginate}
          currentPage={currentPage}
         
@@ -193,7 +197,7 @@ const PaginationComp = ({
   currentPage,
 }: {
   articlesPerPage: number;
-  totalArticles: any;
+  totalArticles: number;
   paginate: (pageNumber: number) => void;
   currentPage: number;
 }) => {

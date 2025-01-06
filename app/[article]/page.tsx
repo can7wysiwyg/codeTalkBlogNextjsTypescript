@@ -1,9 +1,9 @@
 'use client'
 import moment from 'moment'
-import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import SideBar from '../SideBar'
+import Image from 'next/image'
 
 
 interface Article {
@@ -21,7 +21,7 @@ interface Article {
 
 
 
-export default function singleArticle() {
+export default function SingleArticle() {
   const params = useParams<{ article: string }>()
   const[item, setItem] = useState<Article | null>(null)
   
@@ -49,7 +49,7 @@ export default function singleArticle() {
     fetchArticle()
 
 
-  }, [])
+  }, [params.article])
 
 
   
@@ -61,7 +61,7 @@ export default function singleArticle() {
       <div className='row'>
       <div className="col-lg-8 mb-5 mb-lg-0">
       <article>
-						<img loading="lazy" decoding="async" src={item?.articleImage} alt="Post Thumbnail" className="w-100" />
+						<Image loading="lazy" decoding="async" src={item?.articleImage || 'https://en.wikipedia.org/wiki/White_dress_of_Marilyn_Monroe#/media/File:Marilyn_Monroe_photo_pose_Seven_Year_Itch.jpg'} alt="Post Thumbnail" className="w-100" />
 						<ul className="post-meta mb-2 mt-4">
 							<li>
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" style={{marginRight: "5px", marginTop: "-4px"}} className="text-dark" viewBox="0 0 16 16">

@@ -70,6 +70,8 @@ export default function Page() {
     }
   };
 
+  console.log(item)
+
   return (
     <div className="container d-flex flex-column justify-content-start">
       <div className="row justify-content-center">

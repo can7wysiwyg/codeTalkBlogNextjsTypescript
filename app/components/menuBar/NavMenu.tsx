@@ -3,7 +3,7 @@ import Calculate from './authlogic/Calculate';
 import Logout from './authlogic/Logout';
 import Link from 'next/link';
 import DropMenu from './DropMenu';
-import { redirect } from 'next/navigation';
+
 
 export default async function NavMenu() {
   const session = await getSession();
@@ -17,7 +17,8 @@ export default async function NavMenu() {
       <div className="container">
         <nav className="navbar navbar-expand-lg navbar-light px-0">
           <Link className="navbar-brand order-1 py-0" href="/">
-            <img decoding="async" className="img-fluid" src="..." alt="CodeTalk" />
+            {/* <img decoding="async" className="img-fluid" src="..." alt="CodeTalk" /> */}
+            <h2>CodeTalk</h2>
           </Link>
           <div className="navbar-actions order-3 ml-0 ml-md-4">
             <button

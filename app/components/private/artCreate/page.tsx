@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
-import { redirect } from 'next/navigation';
 
 // Dynamically import React Quill to prevent SSR issues
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
@@ -20,7 +19,6 @@ export default function ArticleUploadPage() {
     const [category, setCategory] = useState('');
     const [text, setContent] = useState('');
     const [image, setImage] = useState<File | null>(null);
-    const [message, setMessage] = useState('');
     const [items, setItems] = useState<Category[] | null>(null);
 
 
@@ -36,7 +34,7 @@ export default function ArticleUploadPage() {
           
           setItems(data)
           
-         } catch (error: any) {
+         } catch (error: unknown) {
 
           console.log(`there was a problem ${error}`)
           
@@ -57,7 +55,7 @@ export default function ArticleUploadPage() {
         e.preventDefault();
 
         if (!image) {
-            setMessage('Please select an image.');
+            console.log('Please select an image.') ;
             return;
         }
 
@@ -79,10 +77,12 @@ export default function ArticleUploadPage() {
                 alert('Article uploaded successfully!');
                 window.location.reload()
             } else {
-                setMessage(result.msg || 'Failed to upload article');
+
+                console.log(result.msg || 'Failed to upload article')
+            
             }
         } catch (error) {
-            setMessage(`Error: ${error}`);
+            console.log(`Error: ${error}`);
         }
     };
 
@@ -140,7 +140,7 @@ export default function ArticleUploadPage() {
                                     {
                                       Array.isArray(items) ? items?.map((item) => (
 
-                                        <option value={item.id}>{item.catName}</option>
+                                        <option key={item.id} value={item.id}>{item.catName}</option>
 
 
                                       )) : "LOADING..."

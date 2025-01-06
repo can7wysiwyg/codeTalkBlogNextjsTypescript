@@ -4,7 +4,7 @@ import { NextResponse } from "next/server"
 
 const prisma = new PrismaClient()
 
-export const GET = async(request: Request) => {
+export const GET = async() => {
 
     try {
 
@@ -19,11 +19,13 @@ export const GET = async(request: Request) => {
 
         return NextResponse.json(articles)
         
-    } catch (error: any) {
-
-        return NextResponse.json({msg: `there was a problem in fetching articles ${error}`})
-
-        
-    }
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+          return NextResponse.json({ msg: `There was an error: ${error.message}` });
+        } else {
+          return NextResponse.json({ msg: 'An unknown error occurred' });
+        }
+      }
+      
 
 }

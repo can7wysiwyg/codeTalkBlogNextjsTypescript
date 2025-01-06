@@ -24,7 +24,7 @@ export default function ViewingCategories() {
             
             setItems(data)
             
-           } catch (error: any) {
+           } catch (error: unknown) {
 
             console.log(`there was a problem ${error}`)
             
@@ -55,7 +55,7 @@ export default function ViewingCategories() {
                                      {
                                         Array.isArray(items) ? items?.map((item) => (
                                     
-                                        <li> 
+                                        <li key={item.id}> 
                                         
                                           <Link href={`/components/private/categories/${item.id}`} key={item.id}>{item.catName}</Link> </li>
                                         )) : <p className="border">loading.... </p>

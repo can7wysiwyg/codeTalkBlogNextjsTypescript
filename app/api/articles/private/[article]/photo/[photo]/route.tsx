@@ -81,7 +81,7 @@ export const PATCH = async (request: Request, { params }: { params: { photo: str
       const cloudinaryUrl = await uploadPromise;
   
       // Update the photo in the database
-      const updatedPhoto = await prisma.article.update({
+       await prisma.article.update({
         where: { id: params.photo },
         data: { articleImage: cloudinaryUrl },
       });
@@ -89,8 +89,13 @@ export const PATCH = async (request: Request, { params }: { params: { photo: str
       return NextResponse.json({
         msg: "Photo updated successfully"
       });
-    } catch (error: any) {
-      return NextResponse.json({ msg: `There was a problem: ${error.message}` });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return NextResponse.json({ msg: `There was an error: ${error.message}` });
+      } else {
+        return NextResponse.json({ msg: 'An unknown error occurred' });
+      }
     }
+    
   };
   

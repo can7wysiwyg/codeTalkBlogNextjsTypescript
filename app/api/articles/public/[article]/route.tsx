@@ -18,8 +18,13 @@ export const GET = async(request: Request, {params} : {params: {article: string}
   return NextResponse.json(articleSingle)
 
         
-    } catch (error) {
-        return NextResponse.json({msg: `there was an error: ${error}`})
-    }
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+          return NextResponse.json({ msg: `There was an error: ${error.message}` });
+        } else {
+          return NextResponse.json({ msg: 'An unknown error occurred' });
+        }
+      }
+      
 
 }

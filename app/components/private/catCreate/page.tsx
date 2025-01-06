@@ -29,7 +29,7 @@ export default function CategoryCreate() {
             window.location.href = "/components/private/categories"
 
             
-        } catch (error: any) {
+        } catch (error: unknown) {
 
             console.error(`there was a problem ${error}`)
             

@@ -29,11 +29,14 @@ export const GET = async(request: Request, { params }: { params: { category: str
 
 
         
-    } catch (error: any) {
-
-        return NextResponse.json({msg: `there was a problem ${error}`})
-        
-    }
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+          return NextResponse.json({ msg: `There was an error: ${error.message}` });
+        } else {
+          return NextResponse.json({ msg: 'An unknown error occurred' });
+        }
+      }
+      
 
 }
 

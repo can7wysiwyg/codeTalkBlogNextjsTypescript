@@ -15,13 +15,13 @@ export default function About() {
               </div>
             </div>
             <div className="col-lg-8 mx-auto mb-5 mb-lg-0">
-              <img
+              {/* <img
                 loading="lazy"
                 decoding="async"
                 src="images/author.jpg"
                 className="img-fluid w-100 mb-4"
                 alt="Author Image"
-              />
+              /> */}
               <h1 className="mb-4">Hello, my name is Paul Kasusa</h1>
               <div className="content">
                 <p>

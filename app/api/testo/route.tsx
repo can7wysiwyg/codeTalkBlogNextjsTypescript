@@ -46,10 +46,14 @@ export const POST = async (request: Request) => {
         },
       }, { status: 201 });
   
-    } catch (error: any) {
-      // Handle errors gracefully
-      return NextResponse.json({ msg: `There was a problem: ${error.message}` }, { status: 500 });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return NextResponse.json({ msg: `There was an error: ${error.message}` });
+      } else {
+        return NextResponse.json({ msg: 'An unknown error occurred' });
+      }
     }
+    
   };
   
 
@@ -57,7 +61,7 @@ export const POST = async (request: Request) => {
 
 
 
-export const GET = async(request: Request) => {
+export const GET = async() => {
 
     
     try {
@@ -96,11 +100,14 @@ export const GET = async(request: Request) => {
 
 
         
-    } catch (error: any) {
-
-        return NextResponse.json({msg: `there was a problem ${error}`})
-        
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return NextResponse.json({ msg: `There was an error: ${error.message}` });
+      } else {
+        return NextResponse.json({ msg: 'An unknown error occurred' });
+      }
     }
+    
 
     
    

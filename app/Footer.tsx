@@ -1,4 +1,4 @@
-import Link from 'next/link'
+// import Link from 'next/link'
 import React from 'react'
 
 export default function Footer() {
@@ -9,7 +9,7 @@ export default function Footer() {
   <div className="container section">
     <div className="row">
       <div className="col-lg-10 mx-auto text-center">
-        <Link className="d-inline-block mb-4 pb-2" href="/">
+        {/* <Link className="d-inline-block mb-4 pb-2" href="/">
           <img
             
             decoding="async"
@@ -17,7 +17,7 @@ export default function Footer() {
             src="images/logo-white.png"
             alt="CodeTalk"
           />
-        </Link>
+        </Link> */}
         {/* <ul className="p-0 d-flex navbar-footer mb-0 list-unstyled">
           <li className="nav-item my-0">
             <Link className="nav-link" href="about.html">

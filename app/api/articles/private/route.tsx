@@ -15,6 +15,14 @@ cloudinary.config({
     api_secret: process.env.API_SECRET
 });
 
+
+interface UploadResponse {
+    secure_url: string;  // Cloudinary URL for the uploaded image
+    public_id: string;   // Public ID of the uploaded image (optional)
+    format: string;      // Image format (optional)
+  }
+  
+
 // Helper to convert Web ReadableStream to Node.js Readable stream
 function webReadableStreamToNodeReadable(webStream: ReadableStream) {
     const reader = webStream.getReader();
@@ -55,21 +63,41 @@ export const POST = async (request: Request) => {
         const nodeReadableStream = webReadableStreamToNodeReadable(imageFile.stream());
 
         // Wrap Cloudinary upload_stream in a promise to handle the result
-        const uploadResponse = await new Promise((resolve, reject) => {
+        // const uploadResponse: UploadResponse = await new Promise((resolve, reject) => {
+        //     const uploadStream = cloudinary.uploader.upload_stream(
+        //         { folder: 'articles', resource_type: 'image' },  // Optional Cloudinary settings
+        //         (error, result) => {
+        //             if (error) {
+        //                 reject(error);
+        //             } else {
+        //                 resolve(result);  // This is where you'll get the `secure_url`
+        //             }
+        //         }
+        //     );
+
+        //     // Pipe the converted Node.js readable stream to Cloudinary
+        //     nodeReadableStream.pipe(uploadStream);
+        // });
+
+
+        const uploadResponse: UploadResponse = await new Promise((resolve, reject) => {
             const uploadStream = cloudinary.uploader.upload_stream(
-                { folder: 'articles', resource_type: 'image' },  // Optional Cloudinary settings
+                { folder: 'articles', resource_type: 'image' }, // Optional Cloudinary settings
                 (error, result) => {
                     if (error) {
                         reject(error);
+                    } else if (result) {
+                        resolve(result); // Ensure result is defined before resolving
                     } else {
-                        resolve(result);  // This is where you'll get the `secure_url`
+                        reject(new Error("Unexpected undefined result from Cloudinary upload."));
                     }
                 }
             );
-
+        
             // Pipe the converted Node.js readable stream to Cloudinary
             nodeReadableStream.pipe(uploadStream);
         });
+        
 
         // Connect to MongoDB
         
@@ -110,7 +138,7 @@ if(adminExists?.adminRole !== "cockney")  {
         const newArticle = await prisma.article.create({
             data: {
                 articleTitle,
-                articleImage: (uploadResponse as any).secure_url,  // Get the Cloudinary URL here
+                articleImage: uploadResponse.secure_url,  // Get the Cloudinary URL here
                 articleCategoryId: articleCategory,
                 articleText
             }
@@ -123,9 +151,14 @@ if(adminExists?.adminRole !== "cockney")  {
         
 
         return NextResponse.json({ msg: "Article created successfully", article: newArticle });
-    } catch (error: any) {
-        return NextResponse.json({ msg: `There was a problem: ${error.message}` });
-    }
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+          return NextResponse.json({ msg: `There was an error: ${error.message}` });
+        } else {
+          return NextResponse.json({ msg: 'An unknown error occurred' });
+        }
+      }
+      
 
     
 };

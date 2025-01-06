@@ -1,6 +1,5 @@
 import { getSession } from "@/db/getSession"
 import { PrismaClient } from "@prisma/client"
-import { redirect } from "next/navigation"
 import { NextResponse } from "next/server"
 
 const prisma = new PrismaClient()
@@ -70,11 +69,14 @@ return NextResponse.json({msg: "successfully updated"})
 
 
         
-    } catch (error: any) {
-
-        return NextResponse.json({msg: `there was  a problem ${error}`})
-        
-    }
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+          return NextResponse.json({ msg: `There was an error: ${error.message}` });
+        } else {
+          return NextResponse.json({ msg: 'An unknown error occurred' });
+        }
+      }
+      
 
 
 

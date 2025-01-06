@@ -4,6 +4,7 @@ import moment from "moment";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import SideBar from "./SideBar";
+import Image from "next/image";
 
 
 
@@ -77,7 +78,7 @@ export default function Home() {
                             </span>
                           </div>
 
-                          <img
+                          <Image
                             loading="lazy"
                             decoding="async"
                             src={articleItem.articleImage}
@@ -132,7 +133,7 @@ export default function Home() {
         {/* Pagination */}
         <PaginationComp
           articlesPerPage={articlesPerPage}
-          totalArticles={articleItems?.length}
+          totalArticles={articleItems?.length ?? 0}
           paginate={paginate}
           currentPage={currentPage}
         />
@@ -149,7 +150,7 @@ const PaginationComp = ({
   currentPage,
 }: {
   articlesPerPage: number;
-  totalArticles: any;
+  totalArticles: number;
   paginate: (pageNumber: number) => void;
   currentPage: number;
 }) => {

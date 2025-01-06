@@ -12,7 +12,7 @@ export default function Calculate() {
   const [adminData, setAdminData] = useState<AdminData | null>(null);
 
    const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchAdmin = async () => {
@@ -26,9 +26,22 @@ export default function Calculate() {
         const data = await response.json();
         const parsedData = JSON.parse(data); 
         setAdminData(parsedData);
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
+      } 
+
+      catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unknown error occurred");
+        }
+      
+       
+                
+      }
+      
+      
+      
+      finally {
         setLoading(false);
       }
     };

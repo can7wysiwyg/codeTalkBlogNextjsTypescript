@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link';
+
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
@@ -11,7 +11,7 @@ interface Category {
 }
 
 
-export default function () {
+export default function Functo() {
     const params = useParams<{ item: string }>()
     const category =  params.item
     const[item, setItem] = useState<Category | null>(null)
@@ -30,7 +30,7 @@ export default function () {
 
                   setItem(data)
                 
-            } catch (error: any) {
+            } catch (error: unknown) {
 
                 console.log(`there was an error ${error}`)
                 
@@ -44,7 +44,7 @@ export default function () {
 
 
 
-       }, [])
+       }, [category])
 
       
 

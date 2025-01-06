@@ -27,7 +27,7 @@ export default function DropMenu() {
             
             setItems(data)
             
-           } catch (error: any) {
+           } catch (error: unknown) {
 
             console.log(`there was a problem ${error}`)
             

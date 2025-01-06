@@ -1,28 +1,28 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+// import localFont from "next/font/local";
 import NavMenu from "./components/menuBar/NavMenu";
 import Script from "next/script";
 import Head from "next/head";
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./globals.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import MobileMenu from "./components/menuBar/DropMenu";
+// import MobileMenu from "./components/menuBar/DropMenu";
 import Footer from "./Footer";
 import { SessionProvider } from "next-auth/react";
 
 
 
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+// const geistSans = localFont({
+//   src: "./fonts/GeistVF.woff",
+//   variable: "--font-geist-sans",
+//   weight: "100 900",
+// });
+// const geistMono = localFont({
+//   src: "./fonts/GeistMonoVF.woff",
+//   variable: "--font-geist-mono",
+//   weight: "100 900",
+// });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -76,7 +76,7 @@ export default function RootLayout({
           strategy="beforeInteractive"
         />
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" />
+        <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" strategy="afterInteractive" />
         
         
 

@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 const prisma = new PrismaClient()
 
 
-export const GET = async (request: Request) => {
+export const GET = async () => {
   try {
     const session = await getSession();
 
@@ -38,8 +38,12 @@ export const GET = async (request: Request) => {
     }
 
     return NextResponse.json(adminFound, { status: 200 });
-  } catch (error: any) {
-    console.error(error);
-    return NextResponse.json({ msg: `There was a problem: ${error.message}` }, { status: 500 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ msg: `There was an error: ${error.message}` });
+    } else {
+      return NextResponse.json({ msg: 'An unknown error occurred' });
+    }
   }
+  
 };

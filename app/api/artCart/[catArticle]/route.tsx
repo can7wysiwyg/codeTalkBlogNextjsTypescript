@@ -15,11 +15,14 @@ export const GET = async(request: Request, {params}: {params: {catArticle: strin
         
         return NextResponse.json(articles)
         
-    } catch (error: any) {
-
-        return NextResponse.json({msg: `there was an error ${error}`})
-        
-    }
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+          return NextResponse.json({ msg: `There was an error: ${error.message}` });
+        } else {
+          return NextResponse.json({ msg: 'An unknown error occurred' });
+        }
+      }
+      
 
 
 }
