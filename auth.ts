@@ -1,9 +1,21 @@
 import NextAuth, { CredentialsSignin } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-import { compare } from "bcryptjs"
+import crypto from "crypto";
+
+
 import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient()
+
+
+
+
+const verifyPassword = (password: string, storedHash: string): boolean => {
+  const [salt, originalHash] = storedHash.split(":"); // Extract salt and hash
+  const hash = crypto.pbkdf2Sync(password, salt, 100000, 64, "sha512").toString("hex");
+  return hash === originalHash; // Compare hashes
+};
+
 
 
 
@@ -20,60 +32,48 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
 
       authorize: async(credentials) => {
-        const email = credentials.email as string || undefined
-        const password = credentials.password as string || undefined
+        const email = credentials.email as string 
+        const password = credentials.password as string 
 
 
-        if(!email || !password) {
-          throw new CredentialsSignin("provide email and password")
-        }
-
-
+        
         const user = await prisma.admin.findUnique({
           where: {
-              email: email // Replace with the actual email value
+            email,
           },
           select: {
-              password: true,  // Select password field
-              adminRole: true,  // Select adminRole field
-              email: true,
-              id: true
-          }
-      });
-      
+            password: true, // Select password field
+            adminRole: true, // Select adminRole field
+            email: true,
+            id: true,
+          },
+        });
+    
         
-        // Admin.findOne({email}).select("+password +adminRole")
+        
 
-
-        if(!user) {
-          throw new Error( "invalid email or password")
+        if (!user) {
+          throw new Error("Invalid email or password.");
         }
-
-        if(!user.password) {
-
-          throw new Error( "invalid password")
-
+    
+        if (!user.password) {
+          throw new Error("Password not set for this user.");
         }
-
-
-        const isMatch = await compare(password, user.password)
-
-
-        if(!isMatch) {
-
-          throw new Error( "wrong password")
-
+    
+        // Verify the password
+        const isMatch = verifyPassword(password, user.password);
+    
+        if (!isMatch) {
+          throw new Error("Wrong password.");
         }
-
-
+    
+        // Prepare user data for return
         const userData = {
-          // firstName: user.fullname,
-          email: user?.email,
+          email: user.email,
           role: user.adminRole,
-          id: user?.id
-        }
-  
-
+          id: user.id,
+        };
+    
 
 
 

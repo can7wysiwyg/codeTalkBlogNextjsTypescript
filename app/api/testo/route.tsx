@@ -1,63 +1,80 @@
 import { getSession } from "@/db/getSession";
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
-import bcrypt from "bcryptjs"
-
+import crypto from "crypto"
 
 const prisma = new PrismaClient()
 
 
+const hashPassword = (password: string, salt: string): string => {
+  const hash = crypto.pbkdf2Sync(password, salt, 100000, 64, "sha512");
+  return `${salt}:${hash.toString("hex")}`;
+};
+
+
+// Helper function to generate a random salt
+const generateSalt = (): string => {
+  return crypto.randomBytes(16).toString("hex");
+};
+
+
+
 export const POST = async (request: Request) => {
-    try {
-      // Get the email and password from the request body
-      const { email, password } = await request.json();
-  
-      // Validate input fields
-      if (!email || !password) {
-        return NextResponse.json({ msg: "Email and password are required." }, { status: 400 });
-      }
-  
-      // Check if the email already exists
-      const existingAdmin = await prisma.admin.findUnique({
-        where: { email },
-      });
-  
-      if (existingAdmin) {
-        return NextResponse.json({ msg: "Email is already taken." }, { status: 409 });
-      }
-  
-      // Hash the password before saving
-      const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
-  
-      // Create a new admin in the database
-      const newAdmin = await prisma.admin.create({
-        data: {
-          email,
-          password: hashedPassword
-        },
-      });
-  
-      // Return a success response
-      return NextResponse.json({
+  try {
+    // Get the email and password from the request body
+    const { email, password } = await request.json();
+
+    // Validate input fields
+    if (!email || !password) {
+      return NextResponse.json(
+        { msg: "Email and password are required." },
+        { status: 400 }
+      );
+    }
+
+    // Check if the email already exists
+    const existingAdmin = await prisma.admin.findUnique({
+      where: { email },
+    });
+
+    if (existingAdmin) {
+      return NextResponse.json(
+        { msg: "Email is already taken." },
+        { status: 409 }
+      );
+    }
+
+    // Generate a salt and hash the password
+    const salt = generateSalt();
+    const hashedPassword = hashPassword(password, salt);
+
+    // Create a new admin in the database
+    const newAdmin = await prisma.admin.create({
+      data: {
+        email,
+        password: hashedPassword, // Store salt and hash together
+      },
+    });
+
+    // Return a success response
+    return NextResponse.json(
+      {
         msg: "Admin registered successfully.",
         admin: {
           id: newAdmin.id,
           email: newAdmin.email,
         },
-      }, { status: 201 });
-  
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        return NextResponse.json({ msg: `There was an error: ${error.message}` });
-      } else {
-        return NextResponse.json({ msg: 'An unknown error occurred' });
-      }
+      },
+      { status: 201 }
+    );
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ msg: `There was an error: ${error.message}` });
+    } else {
+      return NextResponse.json({ msg: "An unknown error occurred" });
     }
-    
-  };
-  
-
-
+  }
+};
 
 
 

@@ -7,7 +7,7 @@ import Image from "next/image";
 
 
 interface Article {
-  _id: string;
+  id: string;
   articleTitle: string;
   articleImage: string;
   articleCategoryId: string; 
@@ -125,7 +125,7 @@ export default function SideBar() {
                 <div className="widget-list">
                   {recommendedArticles.length > 0 ? (
                     recommendedArticles.map((article) => (
-                      <article key={article._id} className="card mb-4">
+                      <article key={article.id} className="card mb-4">
                         <div className="card-image">
                           <Image
                             loading="lazy"
@@ -140,9 +140,10 @@ export default function SideBar() {
                         <div className="card-body px-0 pb-1">
                           <h3>
                             <Link
-                              href={`/${article._id}`}
+                              href={`/${article.id}`}
                               className="post-title post-title-sm"
                             >
+                              
                               {article.articleTitle}
                             </Link>
                           </h3>
@@ -154,7 +155,7 @@ export default function SideBar() {
                           ></p>
                           <div className="content">
                             <Link
-                              href={`/${article._id}`}
+                              href={`/${article.id}`}
                               className="read-more-btn"
                             >
                               Read Full Article
