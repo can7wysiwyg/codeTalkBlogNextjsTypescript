@@ -1,17 +1,18 @@
-"use client";
+"use client"
 
-import Logout from "./authlogic/Logout";
- 
+import { useSession } from "next-auth/react"
+import Logout from "./authlogic/Logout"
 
+export default function SessionHandler() {
+  const { status } = useSession()
 
-interface SessionHandlerProps {
-  session: any; // Replace `any` with your session's type if known
-}
+  if (status === "loading") {
+    return null
+  }
 
-export default function SessionHandler({ session }: SessionHandlerProps) {
   return (
     <li className="nav-item">
-      {session ? <Logout /> : ""}
+      {status === "authenticated" && <Logout />}
     </li>
-  );
+  )
 }

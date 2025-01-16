@@ -1,8 +1,7 @@
 'use server'
 
-import { signIn } from "@/auth"
 import { redirect } from "next/navigation"
-import { AuthError } from "next-auth"
+import { signIn } from "@/auth"
 
 export async function LoginAdmin(formData: FormData) {
   const email = formData.get('email')
@@ -20,22 +19,15 @@ export async function LoginAdmin(formData: FormData) {
     const result = await signIn('credentials', {
       redirect: false,
       email,
-      password
+      password,
     })
 
-    if (result?.error) {
-      return { error: "Invalid credentials" }
-    }
-
-    if (result?.ok) {
+    if (!result?.error) {
       redirect('/')
     }
 
-    return { error: "Something went wrong" }
+    return { error: result?.error || "Authentication failed" }
   } catch (error) {
-    if (error instanceof AuthError) {
-      return { error: "Authentication failed" }
-    }
     return { error: "An unexpected error occurred" }
   }
 }
