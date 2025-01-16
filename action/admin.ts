@@ -31,9 +31,16 @@ const LoginAdmin = async (formData: FormData) => {
     })
 
     // If login is successful, redirect
-    if (!result?.error) {
-      redirect('/')
+    // if (!result?.error) {
+    //   redirect('/')
+    // }
+
+
+    if (result?.ok && !result.error) {
+      redirect(result.url || "/");
+      return null; // Prevent further execution
     }
+
 
     // If there's an error, return it
     return {
