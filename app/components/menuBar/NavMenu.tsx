@@ -1,8 +1,9 @@
+
 import { getSession } from '@/db/getSession';
 import Calculate from './authlogic/Calculate';
-import Logout from './authlogic/Logout';
 import Link from 'next/link';
 import DropMenu from './DropMenu';
+import SessionHandler from './SessionHandler';
 
 
 export default async function NavMenu() {
@@ -66,9 +67,11 @@ export default async function NavMenu() {
               <li className="nav-item">
                 <Link className="nav-link" href="/details/contact/">Contact</Link>
               </li>
-              <li className="nav-item">
+              <SessionHandler session={session} />
+
+              {/* /<li className="nav-item">
                 {session ? <Logout /> : ""}
-              </li>
+              </li> */}
             </ul>
           </div>
         </nav>
